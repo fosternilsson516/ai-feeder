@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamburger Menu</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+<div class="menu-btn" tabindex="-1">
+  <div class="btn-line"></div>
+  <div class="btn-line"></div>
+  <div class="btn-line"></div>
+</div>
+
+<div class="menu">
+  <ul>
+    <li onclick="loadContent('admin_center')">Admin Center</li>
+    <li onclick="loadContent('availability')">Availability</li>
+    <li onclick="loadContent('analytics')">Analytics</li>
+    <li onclick="loadContent('help')">Help</li>
+  </ul>
+</div>
+
+<!-- Default content for the dashboard -->
+<div id="default-content">
+    <h1>{{ default_content }}</h1>
+  </div>
+
+<!-- Content placeholder -->
+<div id="sub-menu">
+
+  </div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

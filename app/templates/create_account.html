@@ -1,0 +1,38 @@
+<!-- templates/create_account.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+</head>
+<body>
+    <h1>Create Account</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flashes">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('users.create_account') }}" method="post">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" value="{{ email }}" required><br>
+        <label for="phone_number">Phone:</label>
+        <input type="text" id="phone_number" name="phone_number" value="{{ phone_number }}" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <label for="password_match">Re-Type Password:</label>
+        <input type="password" id="password_match" name="password_match" required><br>
+        {% if 'error' in messages %}
+        <div class="error-message">{{ messages['error'] }}</div>
+        {% endif %}
+        <button type="submit">Create Account</button>
+    </form>
+</body>
+</html>
