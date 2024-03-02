@@ -1,12 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const menuBtn = document.querySelector('.menu-btn');
-    const menu = document.querySelector('.menu');
+    // Add event listener to the document for clicks on the menu button
+    document.addEventListener('click', function(event) {
+      const menuBtn = document.querySelector('.menu-btn');
+      const menu = document.querySelector('.menu');
   
-    menuBtn.addEventListener('click', function () {
+    // Check if the clicked element is the menu button
+    if (event.target === menuBtn || menuBtn.contains(event.target)) {
       menuBtn.classList.toggle('open');
       menu.classList.toggle('open');
-    });
+    }
   });
+});    
+
   
   function addRow(button) {
     // Get the parent table body
@@ -16,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var currentRow = button.closest('tr');
   
     // Clone the current row
-    var newRow = currentRow.cloneNode(true); // true indicates deep cloning
+    var newRow = currentRow.cloneNode(true); // true indicates deep cloning  
   
     // Insert the new row below the current row
     tbody.insertBefore(newRow, currentRow.nextSibling);
@@ -29,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(`/dashboard/${menuOption}`)
       .then(response => response.text())
       .then(html => {
-        document.getElementById('sub-menu').innerHTML = html;
+        // Replace the content of the sub-menu
+        document.querySelector('.container').innerHTML = html;
       })
       .catch(error => console.error('Error loading content:', error));
-  }  
+  } 

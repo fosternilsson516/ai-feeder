@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Availability</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
 
-<div class="container">
+
+{% block submenu %}
     <h1>Availability Schedule</h1>
-    <form action="/submit_availability" method="post">
+    <form id="availability-form" action="{{ url_for('dashboard.availability') }}" method="post">
         <table>
         <thead>
             <tr>
@@ -20,48 +12,48 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="schedule-body">
             <tr>
                 <td>Sunday</td>
-                <td><input type="time" class="start-time"></td>
-                <td><input type="time" class="stop-time"></td>
-                <td><button class="add-time" onclick="addRow(this)">+</button></td>
+                <td><input type="time" name="Sunday_start" class="start-time"></td>
+                <td><input type="time" name="Sunday_stop" class="stop-time"></td>
+                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
             </tr>
             <tr>
                 <td>Monday</td>
-                <td><input type="time" class="start-time"></td>
-                <td><input type="time" class="stop-time"></td>
-                <td><button class="add-time" onclick="addRow(this)">+</button></td>
+                <td><input type="time" name="Monday_start" class="start-time"></td>
+                <td><input type="time" name="Monday_stop" class="stop-time"></td>
+                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
             </tr>
             <tr>
                 <td>Tuesday</td>
-                <td><input type="time" class="start-time"></td>
-                <td><input type="time" class="stop-time"></td>
-                <td><button class="add-time" onclick="addRow(this)">+</button></td>
+                <td><input type="time" name="Tuesday_start" class="start-time"></td>
+                <td><input type="time" name="Tuesday_stop" class="stop-time"></td>
+                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
             </tr>
             <tr>
                 <td>Wednesday</td>
-                <td><input type="time" class="start-time"></td>
-                <td><input type="time" class="stop-time"></td>
-                <td><button class="add-time" onclick="addRow(this)">+</button></td>
+                <td><input type="time" name="Wednesday_start" class="start-time"></td>
+                <td><input type="time" name="Wednesday_stop" class="stop-time"></td>
+                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
             </tr>
             <tr>
                 <td>Thursday</td>
-                <td><input type="time" class="start-time"></td>
-                <td><input type="time" class="stop-time"></td>
-                <td><button class="add-time" onclick="addRow(this)">+</button></td>
+                <td><input type="time" name="Thursday_start" class="start-time"></td>
+                <td><input type="time" name="Thursday_stop" class="stop-time"></td>
+                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
             </tr>
             <tr>
                 <td>Friday</td>
-                <td><input type="time" class="start-time"></td>
-                <td><input type="time" class="stop-time"></td>
-                <td><button class="add-time" onclick="addRow(this)">+</button></td>
+                <td><input type="time" name="Friday_start" class="start-time"></td>
+                <td><input type="time" name="Friday_stop" class="stop-time"></td>
+                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
             </tr>
             <tr>
                 <td>Saturday</td>
-                <td><input type="time" class="start-time"></td>
-                <td><input type="time" class="stop-time"></td>
-                <td><button class="add-time" onclick="addRow(this)">+</button></td>
+                <td><input type="time" name="Saturday_start" class="start-time"></td>
+                <td><input type="time" name="Saturday_stop" class="stop-time"></td>
+                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
             </tr>
         </tbody>
         </table>
@@ -71,9 +63,4 @@
             
         
     </form>
-</div>
-
-
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-</body>
-</html>
+{% endblock %}

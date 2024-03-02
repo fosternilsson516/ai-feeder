@@ -60,8 +60,6 @@ body {
   .menu li {
     padding: 15px;
     color: #fff;
-  }
-  .menu li {
     cursor: pointer;
     caret-color: transparent;
   }

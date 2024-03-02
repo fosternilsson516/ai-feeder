@@ -16,6 +16,7 @@
 
 <div class="menu">
   <ul>
+    <li onclick="loadContent('calendar')">Calendar</li>
     <li onclick="loadContent('admin_center')">Admin Center</li>
     <li onclick="loadContent('availability')">Availability</li>
     <li onclick="loadContent('analytics')">Analytics</li>
@@ -26,12 +27,14 @@
 <!-- Default content for the dashboard -->
 <div id="default-content">
     <h1>{{ default_content }}</h1>
-  </div>
+</div>
 
 <!-- Content placeholder -->
-<div id="sub-menu">
+<div class="container">
+  <!-- Sub-menu content will be rendered here -->
+  {% block submenu %}{% endblock %}
 
-  </div>
+</div>
 
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
