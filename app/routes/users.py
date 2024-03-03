@@ -20,6 +20,8 @@ def login():
         auth_result = user_handler.authenticate_user(email, password)
         print(auth_result)
         if auth_result == True:
+            user_id = user_handler.store_user_session(email)
+            session['user_id'] = user_id
             return redirect(url_for('dashboard.dashboard'))
         else:
             # Authentication failed, display appropriate error message
@@ -37,12 +39,17 @@ def create_account():
             phone_number = request.form['phone_number']
             password = request.form['password']
             password_match = request.form['password_match']
+            f_name = request.form['f_name']
+            l_name = request.form['l_name']
+            business_name = request.form['business_name']
+            street_address = request.form['street_address']
+            city = request.form['city']
+            state = request.form['state']
+            zip_code = request.form['zip_code']
+            subdomain_name = request.form['subdomain_name']
         except BadRequestKeyError as e:
             print("Error accessing form data:", e)
             return "An error occurred while processing the form data.", 500
-
-        session['email'] = email
-        session['phone_number'] = phone_number
 
         # Check if the passwords match
         if password != password_match:
@@ -57,7 +64,7 @@ def create_account():
             return redirect(url_for('users.create_account'))    
 
         # Proceed with registration if passwords match
-        user_handler.create_account(email, phone_number, password_hash)
+        user_handler.create_account(email, phone_number, password_hash, f_name, l_name, business_name, street_address, city, state, zip_code, subdomain_name)
         return redirect(url_for('users.successful_reg'))
 
     # Retrieve form data from session (if available)

@@ -1,5 +1,3 @@
-
-
 {% block submenu %}
     <h1>Availability Schedule</h1>
     <form id="availability-form" action="{{ url_for('dashboard.availability') }}" method="post">
@@ -13,48 +11,30 @@
             </tr>
         </thead>
         <tbody id="schedule-body">
-            <tr>
-                <td>Sunday</td>
-                <td><input type="time" name="Sunday_start" class="start-time"></td>
-                <td><input type="time" name="Sunday_stop" class="stop-time"></td>
-                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
-            </tr>
-            <tr>
-                <td>Monday</td>
-                <td><input type="time" name="Monday_start" class="start-time"></td>
-                <td><input type="time" name="Monday_stop" class="stop-time"></td>
-                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td><input type="time" name="Tuesday_start" class="start-time"></td>
-                <td><input type="time" name="Tuesday_stop" class="stop-time"></td>
-                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td><input type="time" name="Wednesday_start" class="start-time"></td>
-                <td><input type="time" name="Wednesday_stop" class="stop-time"></td>
-                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td><input type="time" name="Thursday_start" class="start-time"></td>
-                <td><input type="time" name="Thursday_stop" class="stop-time"></td>
-                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td><input type="time" name="Friday_start" class="start-time"></td>
-                <td><input type="time" name="Friday_stop" class="stop-time"></td>
-                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td><input type="time" name="Saturday_start" class="start-time"></td>
-                <td><input type="time" name="Saturday_stop" class="stop-time"></td>
-                <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
-            </tr>
+                {% if availability_by_day %}
+                    {% for entry in availability_by_day %}
+                        <tr>
+                            <td>{{ entry[0] }}</td>
+                            <td><input type="time" name="{{ entry[0] }}_start" class="start-time" value="{{ entry[1].split(' - ')[0] }}"></td>
+                            <td><input type="time" name="{{ entry[0] }}_stop" class="stop-time" value="{{ entry[1].split(' - ')[1] }}"></td>
+                            <td>
+                                {% if entry[1] != 'Not available' %}
+                                    <button type="button" class="remove-time" onclick="removeRow(this)">-</button>
+                                {% endif %}
+                                <button type="button" class="add-time" onclick="addRow(this)">+</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %}
+                        <tr>
+                            <td>{{ day }}</td>
+                            <td><input type="time" name="{{ day }}_start" class="start-time"></td>
+                            <td><input type="time" name="{{ day }}_stop" class="stop-time"></td>
+                            <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
         </tbody>
         </table>
         <div style="text-align: center;">
