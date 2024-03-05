@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Center</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-
+{% block submenu %}
 <!-- Top Navigation Bar -->
-<nav class="topnav">
-    <a href="#" id="connect-gmail">Connect Gmail</a>
-    <a href="#" id="manage-users">Manage Users</a>
-    <a href="#" id="customize-page">Customize</a>
-    <a href="#" id="services">Services & Prices</a>
-    <a href="#" id="appointment-reminders">Appointment Reminders</a>
-    <a href="#" id="upload-files">Upload Files/Documents</a>
-    <a href="#" id="customer-info">Customer Information Requirments</a>
-    <!-- Add more links as needed -->
-</nav>
+<div class="topnav">
+    <ul>
+        <li onclick="loadSubMenu('services')">Services & Prices</li>
+        <li onclick="loadSubMenu('manage_employees')">Manage Employees</li>
+        <li onclick="loadSubMenu('upload_files')">Upload Files/Documents</li>
+        <li onclick="loadSubMenu('customer_info')">Customer Information Requirments</li>
+        <li onclick="loadSubMenu('customer_portal')">Customize</li>
+        <!-- Add more list items as needed -->
+    </ul>
+</div>
+
 
 <!-- Main Content Area -->
-<div id="main-content">
-    <!-- Content will be dynamically replaced here -->
+<div class="admin-container">
+  <!-- Sub-menu content will be rendered here -->
+  {% block admin %}{% endblock %}
+
 </div>
-</body>
-</html>
+{% endblock %}

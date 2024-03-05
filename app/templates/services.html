@@ -1,0 +1,19 @@
+{% block admin %}
+<div>
+    <!-- Initial service input -->
+    <div class="service-container">
+        <input type="text" class="service-input" placeholder="Enter service">
+        <div class="checkbox-container">
+            <input type="checkbox" id="hourly" name="hourly">
+            <label for="hourly">Hourly</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="per-service" name="per-service">
+            <label for="per-service">Per Service</label>
+        </div>
+    </div>
+</div>
+
+<!-- Button to add more service inputs -->
+<button id="add-service">+</button>
+{% endblock %}

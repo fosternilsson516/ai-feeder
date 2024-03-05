@@ -1,44 +1,37 @@
 {% block submenu %}
     <h1>Availability Schedule</h1>
-    <form id="availability-form" action="{{ url_for('dashboard.availability') }}" method="post">
-        <table>
+    <form id="availability-form" action="{{ url_for('availability.availability') }}" method="post">
+        <table class="avail-table">
         <thead>
             <tr>
-                <th></th>
-                <th>Start Time</th>
-                <th>Stop Time</th>
-                <th></th>
+                <th class="avail-th"></th>
+                <th class="avail-th">Start Time</th>
+                <th class="avail-th">Stop Time</th>
+                <th class="avail-th"></th>
             </tr>
         </thead>
         <tbody id="schedule-body">
                 {% if availability_by_day %}
-                    {% for entry in availability_by_day %}
+                    {% for day, time_range in availability_by_day.items() %}
                         <tr>
-                            <td>{{ entry[0] }}</td>
-                            <td><input type="time" name="{{ entry[0] }}_start" class="start-time" value="{{ entry[1].split(' - ')[0] }}"></td>
-                            <td><input type="time" name="{{ entry[0] }}_stop" class="stop-time" value="{{ entry[1].split(' - ')[1] }}"></td>
-                            <td>
-                                {% if entry[1] != 'Not available' %}
-                                    <button type="button" class="remove-time" onclick="removeRow(this)">-</button>
-                                {% endif %}
-                                <button type="button" class="add-time" onclick="addRow(this)">+</button>
-                            </td>
+                            <td class="avail-td">{{ day }}</td>
+                            <td class="avail-td"><input type="time" name="{{ day }}_start" class="start-time" value="{{ time_range.split(' - ')[0] }}"></td>
+                            <td class="avail-td"><input type="time" name="{{ day }}_stop" class="stop-time" value="{{ time_range.split(' - ')[1] }}"></td>
                         </tr>
                     {% endfor %}
                 {% else %}
-                    {% for day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] %}
+                    {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
                         <tr>
-                            <td>{{ day }}</td>
-                            <td><input type="time" name="{{ day }}_start" class="start-time"></td>
-                            <td><input type="time" name="{{ day }}_stop" class="stop-time"></td>
-                            <td><button type="button" class="add-time" onclick="addRow(this)">+</button></td>
+                            <td class="avail-td">{{ day }}</td>
+                            <td class="avail-td"><input type="time" name="{{ day }}_start" class="start-time"></td>
+                            <td class="avail-td"><input type="time" name="{{ day }}_stop" class="stop-time"></td>
                         </tr>
                     {% endfor %}
                 {% endif %}
         </tbody>
         </table>
         <div style="text-align: center;">
-            <button type="submit">Submit</button>
+            <button type="submit" class="avail-button">Submit</button>
         </div>
             
         

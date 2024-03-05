@@ -11,44 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });    
-
-  
-  function addRow(button) {
-    // Get the parent table body
-    var tbody = button.closest('tbody');
-
-    // Get the current row
-    var currentRow = button.closest('tr');
-
-    // Clone the current row
-    var newRow = currentRow.cloneNode(true); // true indicates deep cloning  
-
-    // Insert the new row below the current row
-    tbody.insertBefore(newRow, currentRow.nextSibling);
-
-    // Add a minus button to the new row if it's not the first row
-    if (!currentRow.querySelector('.remove-time')) {
-        var minusButton = document.createElement('button');
-        minusButton.type = 'button';
-        minusButton.className = 'remove-time';
-        minusButton.textContent = '-';
-        minusButton.onclick = function() {
-            removeRow(this);
-        };
-        newRow.querySelector('td:last-child').appendChild(minusButton);
-    }
-  }
-
-  function removeRow(button) {
-    // Get the parent table body
-    var tbody = button.closest('tbody');
-
-    // Get the current row
-    var currentRow = button.closest('tr');
-
-    // Remove the current row
-    tbody.removeChild(currentRow);
-  }
   
   function loadContent(menuOption) {
 
@@ -61,6 +23,17 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('.container').innerHTML = html;
       })
       .catch(error => console.error('Error loading content:', error));
+  }
+  function updateCalendar(direction, month, year) {
+
+    // Send a GET request to update the calendar
+    fetch(`/dashboard/calendar/update_calendar?month=${month}&year=${year}&direction=${direction}`)
+      .then(response => response.text())
+      .then(html => {
+        // Replace the content of the calendar container
+        document.querySelector('.container').innerHTML = html;
+      })
+      .catch(error => console.error('Error updating calendar:', error));
   } 
 
   function validateForm() {
@@ -93,3 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Attach event listener to the phone number input field
   document.getElementById("phone_number").addEventListener("input", formatPhoneNumber);
+
+  // Get all anchor elements within the top navigation
+  function loadSubMenu(menuChoice) {
+    
+    fetch(`/dashboard/admin_center/${menuChoice}`)
+      .then(response => response.text())
+      .then(html => {
+        // Replace the content of the sub-menu
+        document.querySelector('.admin-container').innerHTML = html;
+      })
+      .catch(error => console.error('Error loading content:', error));
+  }

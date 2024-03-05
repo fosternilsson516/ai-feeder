@@ -26,9 +26,6 @@ class Users:
                 # Insert into the owners table
                 cursor.execute("INSERT INTO owners (user_id, business_id) VALUES (%s, %s)",
                                 (user_id, business_id))
-
-                                 
-
                 conn.commit()
                 cursor.close()
             except psycopg2.Error as e:
@@ -138,10 +135,10 @@ class Users:
                 cursor.execute("SELECT employee_id FROM employees WHERE user_id = %s", (user_id,))
                 employee_id = cursor.fetchone()[0]
 
-                cursor.execute("SELECT availability_id FROM availability WHERE employee_id = %s", (employee_id,))
-                availability_id = cursor.fetchone()[0]
+                #cursor.execute("SELECT availability_id FROM availability WHERE employee_id = %s", (employee_id,))
+                #availability_id = cursor.fetchone()[0]
 
-                cursor.execute("UPDATE availability SET days = %s, start_times = %s, stop_times = %s WHERE availability_id = %s", (days, start_times, stop_times, availability_id))
+                cursor.execute("UPDATE availability SET days = %s, start_times = %s, stop_times = %s WHERE employee_id = %s", (days, start_times, stop_times, employee_id))
                 conn.commit()
                 cursor.close()
             except psycopg2.Error as e:
