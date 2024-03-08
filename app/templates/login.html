@@ -19,14 +19,13 @@
             </ul>
         {% endif %}
     {% endwith %}
-    <form action="{{ url_for('users.login') }}" method="post">
+    <form action="{{ url_for('users.post_login') }}" method="post">
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" required><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
         <button type="submit">Login</button>
     </form>
-    <a href="{{ url_for('users.create_account') }}"><button>Create Account</button></a><br>
     <a href="{{ url_for('users.forgot_password') }}">Forgot Password?</a>
 </body>
 </html>

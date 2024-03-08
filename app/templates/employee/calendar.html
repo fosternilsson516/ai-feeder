@@ -1,0 +1,31 @@
+{% block submenu %}
+    <h1 class="calendar-heading">
+        <button onclick="updateCalendar('prev', '{{ current_month }}', '{{ current_year }}')" class="arrow-button">&#8249;</button>
+        {{ current_month }} - {{ current_year }}
+        <button onclick="updateCalendar('next', '{{ current_month }}', '{{ current_year }}')" class="arrow-button">&#8250;</button>            
+    </h1>
+<form id="calendar-form" action="{{ url_for('calendars.calendar_post') }}" method="post">    
+<table class="calendar-table">
+  <thead>
+    <tr>
+      <th class="calendar-th">Monday</th>
+      <th class="calendar-th">Tuesday</th>
+      <th class="calendar-th">Wednesday</th>
+      <th class="calendar-th">Thursday</th>
+      <th class="calendar-th">Friday</th>
+      <th class="calendar-th">Saturday</th>
+      <th class="calendar-th">Sunday</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for week in calendar %}
+        <tr>
+            {% for day in week %}
+                <td class="calendar-td">{{ '' if day == 0 else day }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</form>
+{% endblock %}

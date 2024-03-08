@@ -8,27 +8,31 @@ user_handler = Users()
 
 @users_bp.route('/')
 def index():
-    return redirect(url_for('users.login'))
+    return render_template('login_create_account.html')
 
-@users_bp.route('/login', methods=['GET', 'POST'])
+@users_bp.route('/login', methods=['GET'])
 def login():
-    if request.method == 'POST':
-        # Process login form submission
-        email = request.form['email']
-        password = request.form['password']
-
-        auth_result = user_handler.authenticate_user(email, password)
-        print(auth_result)
-        if auth_result == True:
-            user_id = user_handler.store_user_session(email)
-            session['user_id'] = user_id
-            return redirect(url_for('dashboard.dashboard'))
-        else:
-            # Authentication failed, display appropriate error message
-            flash(auth_result, "error")
-            return redirect(url_for('users.login'))
-        # Render the login page for GET requests
+    # Render the login page for GET requests
     return render_template('login.html')
+
+@users_bp.route('/login', methods=['POST'])
+def post_login(): 
+    # Process login form submission
+    email = request.form['email']
+    password = request.form['password']
+
+    auth_result = user_handler.authenticate_user(email, password)
+    if auth_result == True:
+        result = user_handler.store_user_role_id_session(email)
+        if result:
+                user_id, user_role = result[0], result[1]
+        session['user_id'] = user_id
+        session['user_role'] = user_role
+        return redirect(url_for('dashboard.dashboard'))
+    else:
+        # Authentication failed, display appropriate error message
+        flash(auth_result, "error")
+        return redirect(url_for('users.login'))   
 
 @users_bp.route('/create-account', methods=['GET', 'POST'])
 def create_account():
@@ -71,11 +75,11 @@ def create_account():
     email = session.pop('email', '')
     phone_number = session.pop('phone_number', '')
 
-    return render_template('create_account.html', email=email, phone_number=phone_number)   
+    return render_template('owner/create_account.html', email=email, phone_number=phone_number)   
 
 @users_bp.route('/successful-reg')
 def successful_reg():
-    return render_template('successful_reg.html')
+    return render_template('owner/successful_reg.html')
 
 @users_bp.route('/forgot-password')
 def forgot_password():

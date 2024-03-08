@@ -135,4 +135,21 @@ var addEmpCheckInterval = setInterval(function() {
       .catch(error => console.error('Error loading content:', error));
   }
 
+  function toggleDropdown(event) {
+    event.preventDefault();
+    var dropdownContent = document.getElementById("employee-dropdown");
+    dropdownContent.classList.toggle("show");
+  }
+  //function updateCalendar(id) {
+
+    // Send a GET request to update the calendar
+   // fetch(`/dashboard/availability/update_availability?id=${id}`)
+   //   .then(response => response.text())
+   //   .then(html => {
+        // Replace the content of the calendar container
+    //    document.querySelector('.container').innerHTML = html;
+     // })
+    //  .catch(error => console.error('Error updating calendar:', error));
+  //} 
+
 

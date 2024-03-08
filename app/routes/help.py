@@ -6,4 +6,4 @@ user_handler = Users()
 
 @help_bp.route('/')
 def help():
-    return render_template('help.html') 
+    return render_template('owner/help.html') 

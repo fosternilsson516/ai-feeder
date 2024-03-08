@@ -7,4 +7,4 @@ user_handler = Users()
 
 @analytics_bp.route('/')
 def analytics():
-    return render_template('analytics.html')  
+    return render_template('owner/analytics.html')  
