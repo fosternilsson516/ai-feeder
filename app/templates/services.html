@@ -1,19 +1,27 @@
 {% block admin %}
-<div>
-    <!-- Initial service input -->
-    <div class="service-container">
-        <input type="text" class="service-input" placeholder="Enter service">
-        <div class="checkbox-container">
-            <input type="checkbox" id="hourly" name="hourly">
-            <label for="hourly">Hourly</label>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="per-service" name="per-service">
-            <label for="per-service">Per Service</label>
-        </div>
-    </div>
-</div>
+<form id="service-form" action="{{ url_for('admin_center.services') }}" method="post">
 
-<!-- Button to add more service inputs -->
-<button id="add-service">+</button>
+    <label for="service-name">Service Offered:</label><br>
+    <input type="text" id="service-name" name="service-name"><br>
+
+    <label>Service Type:</label><br>
+    <input type="radio" id="per-service" name="service-type" value="Per Service">
+    <label for="per-service">Per Service</label><br>
+    <input type="radio" id="hourly" name="service-type" value="Hourly">
+    <label for="hourly">Hourly</label><br>
+
+    <label for="amount">Amount:</label><br>
+    <input type="text" id="amount" name="amount"><br>
+
+    <button id="add-btn">+</button><br>
+
+    <label for="service-list">Service List:</label><br>
+    <textarea id="service-list" name="service-list" rows="8" cols="40">{{ formatted_service_data }}</textarea><br>
+
+    <div style="text-align: center;">
+        <button type="submit" class="service-button">Save</button>
+    </div>
+
+</form>
+
 {% endblock %}

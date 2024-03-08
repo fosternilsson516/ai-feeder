@@ -1,58 +1,111 @@
-    requested_month = request.args.get('month')
-    requested_year = request.args.get('year')    
+document.addEventListener('DOMContentLoaded', function () {
 
-    # Get current month and year
-    current_date = datetime.now()
+  // Add event listener to the document for clicks on the menu button
+  document.addEventListener('click', function(event) {
+      const menuBtn = document.querySelector('.menu-btn');
+      const menu = document.querySelector('.menu');
 
-    if requested_month and requested_year:
-        # Convert month name to month number
-        current_month = datetime.strptime(requested_month, "%B").month
-        current_year = int(requested_year)
-    else:
-        current_month = current_date.month
-        current_year = current_date.year    
+      // Check if the clicked element is the menu button
+      if (event.target === menuBtn || menuBtn.contains(event.target)) {
+          menuBtn.classList.toggle('open');
+          menu.classList.toggle('open');
+      }
+  });
+});
+  
+  function loadContent(menuOption) {
 
-    # Get the previous and next months
-    prev_month_date = (current_date.replace(month=current_month, year=current_year) - timedelta(days=1)).replace(day=1)
-    next_month_date = (current_date.replace(month=current_month, year=current_year) + timedelta(days=32)).replace(day=1) 
+    document.getElementById('default-content').style.display = 'none';
+    
+    fetch(`/dashboard/${menuOption}`)
+      .then(response => response.text())
+      .then(html => {
+        // Replace the content of the sub-menu
+        document.querySelector('.container').innerHTML = html;
+      })
+      .catch(error => console.error('Error loading content:', error));
+  }
+  function updateCalendar(direction, month, year) {
 
-        # Get the current month and year
-        # Get the previous and next months
-    previous_month = prev_month_date.strftime('%B')
-    next_month = next_month_date.strftime('%B')
+    // Send a GET request to update the calendar
+    fetch(`/dashboard/calendar/update_calendar?month=${month}&year=${year}&direction=${direction}`)
+      .then(response => response.text())
+      .then(html => {
+        // Replace the content of the calendar container
+        document.querySelector('.container').innerHTML = html;
+      })
+      .catch(error => console.error('Error updating calendar:', error));
+  } 
 
-    # Set the start date to the first day of the current month
-    start_date = current_date.replace(month=current_month, year=current_year, day=1)
+  function validateForm() {
+    var password = document.getElementById("password").value;
+    var password_match = document.getElementById("password_match").value;
 
-    # Get the number of days in the current month
-    next_month = (start_date + timedelta(days=32)).replace(day=1)
-    days_in_month = (next_month - start_date).days
+    if (password !== password_match) {
+        alert("Passwords do not match");
+        return false; // Prevent form submission
+    }
+    return true; // Allow form submission
+  }
 
-    # Initialize an empty list to store the calendar structure
-    calendar = []
+  document.addEventListener('DOMContentLoaded', function () {
+    // Define the formatPhoneNumber function
+    function formatPhoneNumber() {
+        var phoneNumberInput = document.getElementById("phone_number");
+        if (phoneNumberInput !== null) {
+            var phoneNumber = phoneNumberInput.value;
+            
+            // Remove all non-numeric characters
+            var formattedPhoneNumber = phoneNumber.replace(/\D/g, '');
 
-    # Initialize variables to keep track of the current date and week
-    current_date = start_date
-    current_week = []
+            // Apply the desired formatting
+            if (formattedPhoneNumber.length >= 3 && formattedPhoneNumber.length <= 6) {
+                formattedPhoneNumber = formattedPhoneNumber.slice(0, 3) + '-' + formattedPhoneNumber.slice(3);
+            } else if (formattedPhoneNumber.length >= 7) {
+                formattedPhoneNumber = formattedPhoneNumber.slice(0, 3) + '-' + formattedPhoneNumber.slice(3, 6) + '-' + formattedPhoneNumber.slice(6);
+            }
 
-    # Calculate the offset for the first day of the month
-    offset = (start_date.weekday() + 1) % 7  # Offset by one day
+            // Update the input field value
+            phoneNumberInput.value = formattedPhoneNumber;
+        }
+    }
 
-    # Add empty slots for the days before the first day of the month
-    current_week.extend([''] * offset)
+    // Attach event listener to the phone number input field
+    var phoneNumberInput = document.getElementById("phone_number");
+    if (phoneNumberInput !== null) {
+        phoneNumberInput.addEventListener("input", formatPhoneNumber);
+    }
+  });
 
-    # Loop through all days in March 2024
-    while start_date.month == current_date.month:  # Loop until we reach the next month
-        # Add the current date to the current week
-        current_week.append(current_date.day)
+  // Get all anchor elements within the top navigation
+  function loadSubMenu(menuChoice) {
+    
+    fetch(`/dashboard/admin_center/${menuChoice}`)
+      .then(response => response.text())
+      .then(html => {
+        // Replace the content of the sub-menu
+        document.querySelector('.admin-container').innerHTML = html;
+      })
+      .catch(error => console.error('Error loading content:', error));
+  }
+  document.getElementById('calculate-btn').addEventListener('click', function() {
+    var serviceType;
+    if (document.getElementById('per-service').checked) {
+        serviceType = "Per Service";
+    } else if (document.getElementById('hourly').checked) {
+        serviceType = "Hourly";
+    } else {
+        alert("Please select a service type.");
+        return;
+    }
 
-        # Move to the next day
-        current_date += timedelta(days=1)
+    var amount = document.getElementById('amount').value;
+    if (!amount) {
+        alert("Please enter an amount.");
+        return;
+    }
 
-        # If the current day is the last day of the week, add the current week to the calendar and start a new week
-        if current_date.weekday() == 6:
-            calendar.append(current_week)
-            current_week = []
-    if current_week:
-        calendar.append(current_week)        
-    print(calendar)   
+    var result = serviceType + ": $" + amount;
+    document.getElementById('result').value = result;
+  });
+

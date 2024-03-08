@@ -19,7 +19,7 @@ def get_availability():
 
     # If user has existing availability data, retrieve the data
     if existing_availability[0] == True:
-        #availability_data = user_handler.get_avail(user_id)
+
         # Unpack the availability data tuple
         _, _, start_times, stop_times, days = existing_availability[1]
         print(existing_availability[1])
@@ -63,7 +63,6 @@ def availability():
             stop_time_field_name = day + stop_field_suffix
             start_time_values = request.form.getlist(field_name)
             stop_time_values = request.form.getlist(stop_time_field_name)
-            #day_number = day_mapping.get(day)
             
             # Append day, start time, and stop time to their respective lists
             for start_time, stop_time in zip(start_time_values, stop_time_values):
@@ -78,7 +77,6 @@ def availability():
 
     # Check if the user already has availability data in the database
     existing_availability = user_handler.get_avail(user_id)
-    print(existing_availability)
 
     # If user has existing availability data, update the corresponding row
     if existing_availability[0] == True:
