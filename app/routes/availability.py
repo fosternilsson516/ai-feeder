@@ -13,11 +13,11 @@ def get_availability():
     user_role = session.get('user_role')    
     if user_role == 'owner':
 
-        owner_name, employee_data = availability_logic.employee_availability(user_id)
+        full_name, employee_data = availability_logic.employee_availability(user_id)
 
         availability_by_day = availability_logic.load_availability(user_id)
         # Render the availability template with existing data if available
-        return render_template('owner/availability.html', availability_by_day=availability_by_day, owner_name=owner_name, employee_data=employee_data)  
+        return render_template('owner/availability.html', availability_by_day=availability_by_day, full_name=full_name, employee_data=employee_data)  
     elif user_role == 'employee':
 
         availability_by_day = availability_logic.load_availability(user_id)
@@ -26,11 +26,15 @@ def get_availability():
 
 @availability_bp.route('/update_availability', methods=['GET'])
 def update_availability():
-    user_id = session.get('user_id')
+    
+    user_id = request.args.get('id')
+    print(user_id)
+
     availability_by_day = availability_logic.load_availability(user_id)
 
+    full_name, employee_data = availability_logic.employee_availability(user_id)
 
-    return render_template('owner/availability.html', availability_by_day=availability_by_day)                 
+    return render_template('owner/availability.html', availability_by_day=availability_by_day, full_name=full_name, employee_data=employee_data)                 
 
 @availability_bp.route('/', methods=['POST'])
 def availability():

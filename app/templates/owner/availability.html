@@ -1,14 +1,14 @@
 {% block submenu %}
-<form id="availability-form" action="{{ url_for('availability.update_availability') }}" method="get">
+
     <div class="dropdown">
-        <button class="dropbtn" id="owner-dropdown-btn" onclick="toggleDropdown(event)">{{ owner_name }}</button>
+        <button class="dropbtn" id="owner-dropdown-btn" onclick="toggleDropdown(event)">{{ full_name }}</button>
         <div class="dropdown-content" id="employee-dropdown">
             {% for name, id in employee_data %}
-                <li class="employee-dropdown" data-id="{{ id }}">{{ name }}</li>
+                <button class="employee-option" data-id="{{ id }}" onclick="selectEmployee(event)">{{ name }}</button>
             {% endfor %}
         </div>
     </div>
-</form>
+
 
     <h1>Availability Schedule</h1>
     <form id="availability-form" action="{{ url_for('availability.availability') }}" method="post">

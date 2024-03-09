@@ -86,7 +86,7 @@ class Employee:
             finally:
                 conn.close()
 
-    def get_owner_name(self, user_id):
+    def get_full_name(self, user_id):
         conn = connect_to_database()
         if conn is not None:
             try:

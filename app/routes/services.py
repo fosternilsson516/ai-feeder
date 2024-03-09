@@ -48,7 +48,6 @@ def post_services():
         # Redirect the user to the login page
         return redirect(url_for('users.login'))
     service_list = request.form.get('service-list')
-    print(service_list)
     rows = service_list.split('\n')
 
     service_names = []

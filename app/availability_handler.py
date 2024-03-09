@@ -27,7 +27,7 @@ class Availability:
                 cursor = conn.cursor()
 
                 cursor.execute("SELECT employee_id FROM employees WHERE user_id = %s", (user_id,))
-                employee_id = cursor.fetchone()[0]
+                employee_id = cursor.fetchone()
 
                 cursor.execute("SELECT * FROM availability WHERE employee_id = %s", (employee_id,))
                 availability_data = cursor.fetchone()

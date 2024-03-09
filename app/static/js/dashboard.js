@@ -138,18 +138,25 @@ var addEmpCheckInterval = setInterval(function() {
   function toggleDropdown(event) {
     event.preventDefault();
     var dropdownContent = document.getElementById("employee-dropdown");
-    dropdownContent.classList.toggle("show");
+    dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
   }
-  //function updateCalendar(id) {
+  function selectEmployee(event) {
+    var selectedName = event.target.textContent;
+    var selectedId = event.target.getAttribute("data-id");
+    document.getElementById("owner-dropdown-btn").textContent = selectedName;
+    // Optionally, you can perform additional actions here
+    updateCalendar(selectedId);
+  }
+  function updateCalendar(selectedId) {
 
     // Send a GET request to update the calendar
-   // fetch(`/dashboard/availability/update_availability?id=${id}`)
-   //   .then(response => response.text())
-   //   .then(html => {
+    fetch(`/dashboard/availability/update_availability?id=${selectedId}`)
+      .then(response => response.text())
+      .then(html => {
         // Replace the content of the calendar container
-    //    document.querySelector('.container').innerHTML = html;
-     // })
-    //  .catch(error => console.error('Error updating calendar:', error));
-  //} 
+        document.querySelector('.container').innerHTML = html;
+      })
+      .catch(error => console.error('Error updating calendar:', error));
+  } 
 
 
