@@ -150,7 +150,7 @@ var addEmpCheckInterval = setInterval(function() {
   function updateCalendar(selectedId) {
 
     // Send a GET request to update the calendar
-    fetch(`/dashboard/availability/update_availability?id=${selectedId}`)
+    fetch(`/dashboard/availability?id=${selectedId}`)
       .then(response => response.text())
       .then(html => {
         // Replace the content of the calendar container

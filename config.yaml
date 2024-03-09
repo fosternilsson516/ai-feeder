@@ -1,8 +1,0 @@
-# config.yaml
-secret_key: "tjkslLIDjsmgvht87392854njasikjdghKHFUISAHS"
-database:
-  username: "postgres"
-  password: "Kilo#366"
-  host: "localhost"
-  port: "5432"
-  dbname: "postgres"
