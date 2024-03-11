@@ -42,8 +42,10 @@
         </tbody>
         </table>
         <div style="text-align: center;">
-
+            {% if is_owner %}
             <button type="submit" class="avail-button">Submit</button>
+            {% else %}
+            {% endif %}
         </div>
             
         

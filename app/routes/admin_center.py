@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint, jsonify, Response
 from app.employee_handler import Employee
+from app.business_handler import Business
 from werkzeug.security import generate_password_hash
 
 
 admin_center_bp = Blueprint('admin_center', __name__)
 employee_handler = Employee()
+business_handler = Business()
 
 @admin_center_bp.route('/')
 def admin_center():
@@ -85,14 +87,6 @@ def post_manage_employees():
             
     return Response(status=204)     
 
-@admin_center_bp.route('/upload_files')
-def upload_files():
-    user_id = session.get('user_id')
-    if user_id is None:
-        # Redirect the user to the login page
-        return redirect(url_for('users.login'))
-    return render_template('owner/upload_files.html')
-
 @admin_center_bp.route('/customer_info')
 def customer_info():
     user_id = session.get('user_id')
@@ -101,11 +95,24 @@ def customer_info():
         return redirect(url_for('users.login'))
     return render_template('owner/customer_info.html')
 
-@admin_center_bp.route('/customer_portal')
+@admin_center_bp.route('/customer_portal', methods=['GET'])
 def customer_portal():
     user_id = session.get('user_id')
     if user_id is None:
         # Redirect the user to the login page
         return redirect(url_for('users.login'))
-    return render_template('owner/customer_portal.html')
+    subdomain = business_handler.get_subdomain(user_id) 
+    full_url = f"http://{subdomain}.localhost:5000" 
+
+
+
+    return render_template('owner/customer_portal.html', full_url=full_url)
+
+@admin_center_bp.route('/customer_portal', methods=['POST'])
+def post_customer_portal():
+    user_id = session.get('user_id')
+    if user_id is None:
+        # Redirect the user to the login page
+        return redirect(url_for('users.login'))
+    return render_template('owner/customer_portal.html')    
                

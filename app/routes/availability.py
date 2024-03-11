@@ -7,19 +7,25 @@ availability_logic = availabilityLogic()
 @availability_bp.route('/', methods=['GET'])
 def get_availability():
     user_id = session.get('user_id')
+    print(user_id)
     if user_id is None:
         # Redirect the user to the login page
         return redirect(url_for('users.login'))
     user_role = session.get('user_role')    
     if user_role == 'owner':
 
-        user_id = request.args.get('id', session.get('user_id'))
+        user_id = int(request.args.get('id', session.get('user_id')))
+        session_user_id = session.get('user_id')
+        if session_user_id is not None:
+            session_user_id = int(session_user_id)
+
+        is_owner = user_id == session_user_id
 
         availability_by_day = availability_logic.load_availability(user_id)
 
         full_name, employee_data = availability_logic.employee_availability(user_id)
-        # Render the availability template with existing data if available
-        return render_template('owner/availability.html', availability_by_day=availability_by_day, full_name=full_name, employee_data=employee_data)  
+
+        return render_template('owner/availability.html', availability_by_day=availability_by_day, full_name=full_name, employee_data=employee_data, is_owner=is_owner)  
     elif user_role == 'employee':
 
         availability_by_day = availability_logic.load_availability(user_id)

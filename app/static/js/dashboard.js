@@ -74,7 +74,7 @@ var addEmpCheckInterval = setInterval(function() {
   function updateCalendar(direction, month, year) {
 
     // Send a GET request to update the calendar
-    fetch(`/dashboard/calendar/update_calendar?month=${month}&year=${year}&direction=${direction}`)
+    fetch(`/dashboard/calendar?month=${month}&year=${year}&direction=${direction}`)
       .then(response => response.text())
       .then(html => {
         // Replace the content of the calendar container
@@ -145,9 +145,9 @@ var addEmpCheckInterval = setInterval(function() {
     var selectedId = event.target.getAttribute("data-id");
     document.getElementById("owner-dropdown-btn").textContent = selectedName;
     // Optionally, you can perform additional actions here
-    updateCalendar(selectedId);
+    updateAvailability(selectedId);
   }
-  function updateCalendar(selectedId) {
+  function updateAvailability(selectedId) {
 
     // Send a GET request to update the calendar
     fetch(`/dashboard/availability?id=${selectedId}`)
@@ -158,5 +158,10 @@ var addEmpCheckInterval = setInterval(function() {
       })
       .catch(error => console.error('Error updating calendar:', error));
   } 
+  function openFilePicker() {
+    document.getElementById('fileInput').click();
+  }
+
+
 
 

@@ -68,7 +68,6 @@ class availabilityLogic:
 
     def employee_availability(self, user_id):
         result = employee_handler.get_full_name(user_id)
-        print(result)
         if result:
             f_name, l_name = result[0], result[1]
         full_name = f_name + " " + l_name    

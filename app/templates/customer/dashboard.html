@@ -8,28 +8,71 @@
 </head>
 <body>
 
-<div class="menu-btn" tabindex="-1">
-  <div class="btn-line"></div>
-  <div class="btn-line"></div>
-  <div class="btn-line"></div>
+  <style>
+    .business-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .address {
+        font-style: italic;
+    }
+    .bio {
+        margin-bottom: 20px;
+    }
+    .services {
+        margin-bottom: 20px;
+    }
+    .employee {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    .employee img {
+        width: 100px; /* Adjust the image size as needed */
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .employee-name {
+        font-weight: bold;
+    }
+</style>
+<div class="header">
+    <!-- Brand logo -->
+        <label type="text" id="logo">load Your Custom Logo/Brand Here</label>
+        <input type="file" id="fileInput" accept="image/png, image/jpeg">
+
+
+    <!-- Business name -->
+    <h1 class="business-name">Business Name</h1>
+    <p class="address">Business Address</p>
 </div>
 
-<div class="menu">
-  <ul>
-    <li onclick="loadContent('calendar')">Calendar</li>
-  </ul>
+<!-- Short bio for the store -->
+<div class="bio">
+    <p>Short bio for the store goes here...</p>
 </div>
 
-<!-- Default content for the dashboard -->
-<div id="default-content">
-    <h1>{{ default_content }}</h1>
+<!-- Services offered -->
+<div class="services">
+    <h2>Services Offered</h2>
+    <ul>
+        <li>Service 1</li>
+        <li>Service 2</li>
+        <li>Service 3</li>
+        <!-- Add more services as needed -->
+    </ul>
 </div>
 
-<!-- Content placeholder -->
-<div class="container">
-  <!-- Sub-menu content will be rendered here -->
-  {% block submenu %}{% endblock %}
-
+<!-- Employees section -->
+<div class="employees">
+    <h2>Our Team</h2>
+    <div class="employee">
+        
+        <p class="employee-name">Employee Name</p>
+        <p>Short bio for the employee goes here...</p>
+    </div>
+    <!-- Add more employees as needed -->
 </div>
 
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>

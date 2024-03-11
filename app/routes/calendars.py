@@ -16,7 +16,7 @@ def get_calendar():
 
         cal, month_name, year = calendars_logic.current_calendar() 
 
-        return render_template('owner/calendar.html', calendar=cal, current_month=month_name, current_year=year)
+        return render_template('owner/calendar.html', calendar=cal, month_name=month_name, year=year)
     elif user_role == 'employee': 
 
         cal, month_name, year = calendars_logic.current_calendar()
@@ -27,27 +27,6 @@ def get_calendar():
         cal, month_name, year = calendars_logic.current_calendar()
 
         return render_template('customer/calendar.html', calendar=cal, current_month=month_name, current_year=year)
-
-
-@calendar_bp.route('/update_calendar', methods=['GET'])
-def update_calendar(): 
-    user_role = session.get('user_role')    
-    if user_role == 'owner':
-
-        cal, updated_month, current_year = calendars_logic.switch_month()
-
-        return render_template('owner/calendar.html', calendar=cal, current_month=updated_month, current_year=current_year)
-    elif user_role == 'employee':
-
-        cal, updated_month, current_year = calendars_logic.switch_month()
-
-        return render_template('employee/calendar.html', calendar=cal, current_month=updated_month, current_year=current_year)
-    elif user_role == 'customer':
-
-        cal, updated_month, current_year = calendars_logic.switch_month()
-
-        return render_template('customer/calendar.html', calendar=cal, current_month=updated_month, current_year=current_year)
-
 
 @calendar_bp.route('/', methods=['POST'])
 def calendar_post():

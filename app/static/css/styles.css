@@ -205,8 +205,8 @@ body {
     border: 1px solid black;
     text-align: left;
     padding: 5px;
-    width: 130px; /* Ensure each day box takes up equal space (100% / 7 days) */
-    height: 80px;
+    width: 150px; /* Ensure each day box takes up equal space (100% / 7 days) */
+    height: 100px;
     vertical-align: top;
   }
 
@@ -214,7 +214,7 @@ body {
     border: 1px solid black;
     text-align: center;
     padding: 5px;
-    width: 100px; /* Ensure each day box takes up equal space (100% / 7 days) */
+    width: 150px; /* Ensure each day box takes up equal space (100% / 7 days) */
     height: 15px;
   }
   .calendar-th {
