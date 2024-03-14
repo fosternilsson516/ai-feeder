@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint, jsonify, Response
+from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint, jsonify, Response, current_app
 from app.employee_handler import Employee
 from app.business_handler import Business
 from werkzeug.security import generate_password_hash
+import os
 
 
 admin_center_bp = Blueprint('admin_center', __name__)
@@ -41,10 +42,6 @@ def manage_employees():
 
 @admin_center_bp.route('/manage_employees', methods=['POST'])
 def post_manage_employees():
-    user_id = session.get('user_id')
-    if user_id is None:
-        # Redirect the user to the login page
-        return redirect(url_for('users.login'))
 
     employees_names = [name.strip() for name in request.form.get('employee-list').split('\n')]
     employees_data = request.form.get('hidden-employee-list').split('\n')
@@ -102,17 +99,71 @@ def customer_portal():
         # Redirect the user to the login page
         return redirect(url_for('users.login'))
     subdomain = business_handler.get_subdomain(user_id) 
-    full_url = f"http://{subdomain}.localhost:5000" 
-
-
-
-    return render_template('owner/customer_portal.html', full_url=full_url)
-
+    full_url = f"http://{subdomain}.local:5000"
+    result = business_handler.get_business_data(user_id)
+    self_bio = business_handler.get_employee_bio(user_id)
+    style_names = {
+        '1': 'Dark',
+        '2': 'Light',
+        '3': 'Modern'
+    }
+    if result is not None: 
+        bio = result[7]        
+        style_id = str(result[8]) 
+        return render_template('owner/customer_portal.html', full_url=full_url, bio=bio, style_id=style_id, self_bio=self_bio)
+    else:
+        return render_template('owner/customer_portal.html', full_url=full_url)   
+    
 @admin_center_bp.route('/customer_portal', methods=['POST'])
 def post_customer_portal():
     user_id = session.get('user_id')
-    if user_id is None:
-        # Redirect the user to the login page
-        return redirect(url_for('users.login'))
-    return render_template('owner/customer_portal.html')    
+    logo_file = request.files['fileInput']
+    bio = request.form.get('business-bio')
+    style_id = request.form.get('style')
+    logo_url = None
+
+    if logo_file and logo_file.filename != '':
+        # Determine file extension and format
+        if logo_file.filename.endswith('.png'):
+            file_format = 'png'
+        else:
+            file_format = 'jpeg'
+
+        img_path = os.path.join(current_app.static_folder, 'img', f'logo_img_{user_id}.{file_format}')
+        if os.path.exists(img_path):
+            # Replace the existing file
+            os.remove(img_path)
+        logo_file.save(img_path)
+        
+        # Use the file path as a reference to the image
+        logo_url = f'app/static/img/logo_img_{user_id}.{file_format}'
+
+
+        business_handler.post_business_data(user_id, logo_url, bio, style_id)
+    else:
+        business_handler.update_business_data(user_id, logo_url, bio, style_id) 
+
+    img_file = request.files['empFileInput']
+    self_bio = request.form.get('self-bio')
+    img_url = None
+    if img_file and img_file.filename != '':
+        # Determine file extension and format
+        if img_file.filename.endswith('.png'):
+            file_format = 'png'
+        else:
+            file_format = 'jpeg'
+
+        img_path = os.path.join(current_app.static_folder, 'img', f'headshot_{user_id}.{file_format}')
+        if os.path.exists(img_path):
+            # Replace the existing file
+            os.remove(img_path)
+        img_file.save(img_path)
+        
+        # Use the file path as a reference to the image
+        img_url = f'app/static/img/headshot_{user_id}.{file_format}' 
+
+        business_handler.post_employee_bio(user_id, img_url, self_bio) 
+    else:
+        business_handler.update_employee_bio(user_id, img_url, self_bio)    
+    return Response(status=204)     
                

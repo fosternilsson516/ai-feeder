@@ -2,40 +2,43 @@
 <div class="subdomain">
     <label id="custom-sub">Promote Your Business With Your Own Custom Subdomain. Put on Business Cards, Instagram, Facebook or Anywhere!!</label><br>
     <a id="subdomain-link" href="{{ full_url }}" target="_blank">{{ full_url }}</a>
-    <button id="copy-button">Copy Link</button>
 </div>
-
+<form id="business-form" action="{{ url_for('admin_center.customer_portal') }}" method="post" enctype="multipart/form-data">
 <div class="logos">
     <!-- Brand logo -->
-        <label type="text" id="logo">load Your Custom Logo/Brand Here</label>
-        <input type="file" id="fileInput" accept="image/png, image/jpeg">
+        <label for="fileInput">Upload Your Custom Logo/Brand Here</label><br>
+        <input type="file" id="fileInput" name="fileInput" accept="image/png, image/jpeg">
+</div>
+<div class="headshot">
+    <!-- Brand logo -->
+        <label for="empFileInput">Upload A Headsot That Will Be Shown On The Main Page</label><br>
+        <input type="file" id="empFileInput" name="empFileInput" accept="image/png, image/jpeg">
+</div>
+
+<!-- Short bio for the store -->
+<div class="self-bio">
+    <p>Enter A Self Bio To Go With Your Photo...</p>
+    <textarea id="self-bio" name="self-bio">{{ self_bio }}</textarea>
 </div>
 
 <!-- Short bio for the store -->
 <div class="bio">
-    <p>Enter A Short Bio For Your Store Here...</p>
-    <textarea type="text" id="business-bio"></textarea>
+    <p>Enter A Main Bio For Your Store Here...</p>
+    <textarea id="business-bio" name="business-bio">{{ bio }}</textarea>
 </div>
 
 <div class="styles">
     <h2>Select Your Style</h2>
-    <button id="dark-style">Dark Style</button>
-    <button id="light-style">Light Style</button>
-    <button id="modern-style">Modern Style</button>
-    <!-- Add more buttons for other style options -->
+    <input type="radio" name="style" value="1" {% if style_id == '1' %} checked {% endif %}>
+    <label>Dark Style</label><br>
+    
+    <input type="radio" name="style" value="2" {% if style_id == '2' %} checked {% endif %}>
+    <label>Light Style</label><br>
+    
+    <input type="radio" name="style" value="3" {% if style_id == '3' %} checked {% endif %}>
+    <label>Modern Style</label><br>
+    <!-- Add more radio buttons for other style options -->
 </div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {    
-    document.getElementById('copy-button').addEventListener('click', function() {
-        const subdomainLink = document.getElementById('subdomain-link');
-        const tempInput = document.createElement('input');
-        tempInput.value = subdomainLink.href;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        alert('Link copied to clipboard!');
-    });
-});
-</script>
+<button type="submit">Submit</button>
+</form>
 {% endblock %}

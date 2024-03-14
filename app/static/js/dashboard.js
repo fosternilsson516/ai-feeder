@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
       menuBtn.classList.toggle('open');
       menu.classList.toggle('open');
   });
+});
 
   var addBtnCheckInterval = setInterval(function() {
   var addBtn = document.getElementById('add-btn');
@@ -49,7 +50,6 @@ var addEmpCheckInterval = setInterval(function() {
 
       var result = firstName + ", " + lastName;
       var hiddenVals = email + ", " + phoneNumber + ', ' + password;
-      //var sendPostEmployeeList = result + ', ' + hiddenVals;
       var employeeListInput = document.getElementById('employee-list');
       employeeListInput.value += result;
       var hiddenEmployeeListInput = document.getElementById('hidden-employee-list');
@@ -57,7 +57,7 @@ var addEmpCheckInterval = setInterval(function() {
     });
   }
 }, 100);
-});
+
   
   function loadContent(menuOption) {
 
@@ -149,19 +149,16 @@ var addEmpCheckInterval = setInterval(function() {
   }
   function updateAvailability(selectedId) {
 
-    // Send a GET request to update the calendar
+    // Send a GET request to update the availability
     fetch(`/dashboard/availability?id=${selectedId}`)
       .then(response => response.text())
       .then(html => {
-        // Replace the content of the calendar container
+        
         document.querySelector('.container').innerHTML = html;
       })
       .catch(error => console.error('Error updating calendar:', error));
   } 
-  function openFilePicker() {
-    document.getElementById('fileInput').click();
-  }
-
+ 
 
 
 
