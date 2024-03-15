@@ -82,3 +82,7 @@ class availabilityLogic:
         employee_data = zip(visible_names, hidden_ids)
 
         return full_name, employee_data
+
+    def get_user_id_by_subdirect(self, subdirectory, subdomain):
+        result = availability_handler.get_user_id(subdirectory, subdomain)
+        return result   

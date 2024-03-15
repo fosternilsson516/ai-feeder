@@ -16,8 +16,9 @@ class Employee:
                 cursor.execute("SELECT user_id FROM users WHERE phone_number = %s", (phone_number,))
                 emp_user_id = cursor.fetchone()[0]
 
+                full_name = f"{f_name}_{l_name}"
                 cursor.execute("INSERT INTO employees (owner_id, user_id, subdirectory_name) VALUES (%s, %s, %s)",
-                               (owner_id, emp_user_id, f_name))
+                               (owner_id, emp_user_id, full_name))
                 conn.commit()
                 cursor.close()
             except psycopg2.Error as e:

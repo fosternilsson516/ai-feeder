@@ -60,3 +60,24 @@ class Availability:
                 print("Error executing SQL query:", e)
             finally:
                 conn.close()
+
+    def get_user_id(self, subdirectory, subdomain):
+        conn = connect_to_database()
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+
+                cursor.execute("SELECT business_id FROM businesses WHERE subdomain_name = %s", (subdomain,))
+                business_id = cursor.fetchone()[0]
+
+                cursor.execute("SELECT owner_id FROM owners WHERE business_id = %s", (business_id,))
+                owner_id = cursor.fetchone()[0]
+
+                cursor.execute("SELECT user_id FROM employees WHERE subdirectory_name = %s AND owner_id = %s", (subdirectory, owner_id))
+                user_id = cursor.fetchone()[0]
+                return user_id
+                cursor.close()
+            except psycopg2.Error as e:
+                print("Error executing SQL query:", e)
+            finally:
+                conn.close()

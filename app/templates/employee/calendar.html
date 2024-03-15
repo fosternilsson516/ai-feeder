@@ -1,8 +1,8 @@
 {% block submenu %}
     <h1 class="calendar-heading">
-        <button onclick="updateCalendar('prev', '{{ current_month }}', '{{ current_year }}')" class="arrow-button">&#8249;</button>
-        {{ current_month }} - {{ current_year }}
-        <button onclick="updateCalendar('next', '{{ current_month }}', '{{ current_year }}')" class="arrow-button">&#8250;</button>            
+        <button onclick="updateCalendar('prev', '{{ month_name }}', '{{ year }}')" class="arrow-button">&#8249;</button>
+        {{ month_name }} - {{ year }}
+        <button onclick="updateCalendar('next', '{{ month_name }}', '{{ year }}')" class="arrow-button">&#8250;</button>            
     </h1>
 <form id="calendar-form" action="{{ url_for('calendars.calendar_post') }}" method="post">    
 <table class="calendar-table">

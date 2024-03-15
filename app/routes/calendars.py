@@ -21,12 +21,7 @@ def get_calendar():
 
         cal, month_name, year = calendars_logic.current_calendar()
 
-        return render_template('employee/calendar.html', calendar=cal, current_month=month_name, current_year=year)
-    elif user_role == 'customer':
-
-        cal, month_name, year = calendars_logic.current_calendar()
-
-        return render_template('customer/calendar.html', calendar=cal, current_month=month_name, current_year=year)
+        return render_template('employee/calendar.html', calendar=cal, month_name=month_name, year=year)
 
 @calendar_bp.route('/', methods=['POST'])
 def calendar_post():

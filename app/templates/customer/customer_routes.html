@@ -3,77 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hamburger Menu</title>
 </head>
 <body>
 
   <style>
+    .header {
+        text-align: center;
+    }
     .business-name {
         font-size: 24px;
         font-weight: bold;
         margin-top: 10px;
+    }
+    .logo {
+        width: 150px; /* Adjust the logo size as needed */
+        height: auto;
+        margin-bottom: 10px;
     }
     .address {
         font-style: italic;
     }
     .bio {
         margin-bottom: 20px;
+        text-align: center;
     }
     .services {
         margin-bottom: 20px;
+        text-align: center;
     }
-    .employee {
-        display: inline-block;
-        margin-right: 20px;
+    .employees {
+        text-align: center; /* Center employee profiles */
     }
-    .employee img {
-        width: 100px; /* Adjust the image size as needed */
-        height: 100px;
+    .employee-profile {
+        margin: 20px;
+        text-align: center;
+    }
+    .employee-profile ul {
+        list-style: none;
+    }
+    .employee-profile img {
+        width: 150px; /* Adjust the image size as needed */
+        height: 150px;
         border-radius: 50%;
         object-fit: cover;
+        margin-bottom: 10px;
+        cursor: pointer;
     }
     .employee-name {
         font-weight: bold;
+        cursor: pointer;
+    }
+    .employee-services ul {
+         /* Remove default list-style markers for the ul */
+        margin-top: 5px;
+        padding-left: 0;
     }
 </style>
 <div class="header">
 
-    <img src="{{ logo_url }}">
-
+    <img class="logo" src="{{ logo_url }}">
     <h1 class="business-name">{{ business_name }}</h1>
-
     <p class="address">{{ address }}</p>
 </div>
 
 <!-- Short bio for the store -->
 <div class="bio">
-    <p>{{ bio }}</p>
+    <p>{{ business_story }}</p>
 </div>
 
 <!-- Services offered -->
 <div class="services">
     <h2>Services Offered</h2>
     <ul>
-
-        <li>{{ services }}</li>
-
-        <!-- Add more services as needed -->
+        {% for service in services %}
+            <li>{{ service }}</li>
+        {% endfor %}
     </ul>
 </div>
 
-{% for employee in employees %}
+{% for employee, emp_bio in employees_with_bios %}
     <div class="employee-profile">
+        <a href="{{ url_for('customer_routes.subdirectory', subdomain=subdomain , subdirectory=employee.split()[3]) }}">
         <img src="{{ employee.split()[0] }}" alt="Employee Headshot">
+        </a>
         <h2>{{ employee.split()[1] }} {{ employee.split()[2] }}</h2>
-        <p>Services Offered:</p>
+        <p>{{ emp_bio }}</p>
+        <p>Services:</p>
         <ul>
-            {% for service in employee.split()[3:] %}
+            {% for service in employee.split()[4:] %}
                 <li>{{ service }}</li>
             {% endfor %}
         </ul>
     </div>
 {% endfor %}
-
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
 </html>

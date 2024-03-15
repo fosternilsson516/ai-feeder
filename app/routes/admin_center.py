@@ -120,6 +120,7 @@ def post_customer_portal():
     logo_file = request.files['fileInput']
     bio = request.form.get('business-bio')
     style_id = request.form.get('style')
+    ###########################have owner enter all the services his shop offers###################################
     logo_url = None
 
     if logo_file and logo_file.filename != '':
