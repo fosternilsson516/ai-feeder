@@ -1,4 +1,48 @@
 {% block submenu %}
+<style>
+    .calendar-heading {
+    text-align: center;
+  }
+
+  .arrow-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 45px; /* Adjust the font size as needed */
+  }
+
+  .arrow-button:hover {
+      text-decoration: underline; /* Optional: Add underline on hover */
+      color: blue;
+  }
+
+  .calendar-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0%;
+    margin-top: 2%;
+  }
+
+  .calendar-td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 5px;
+    width: 150px; /* Ensure each day box takes up equal space (100% / 7 days) */
+    height: 100px;
+    vertical-align: top;
+  }
+
+  .calendar-th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+    width: 150px; /* Ensure each day box takes up equal space (100% / 7 days) */
+    height: 15px;
+  }
+  .calendar-th {
+    background-color: lightgray;
+  }
+</style>
     <h1 class="calendar-heading">
         <button onclick="updateCalendar('prev', '{{ month_name }}', '{{ year }}')" class="arrow-button">&#8249;</button>
         {{ month_name }} - {{ year }}

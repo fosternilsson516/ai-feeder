@@ -1,4 +1,61 @@
 {% block admin %}
+<style>
+    .subdomain {
+        margin-bottom: 20px;
+    }
+    
+    #custom-sub {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 20px;
+    }
+    
+    #subdomain-link {
+        display: block;
+        font-size: 16px;
+        color: blue;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+    
+    #subdomain-link:hover {
+        text-decoration: underline;
+    }
+    
+    .logos, .headshot, .self-bio, .bio, .business-services {
+        margin-bottom: 20px;
+    }
+    
+    label {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+    }
+    
+    input[type="file"] {
+        margin-bottom: 10px;
+    }
+    
+    input[type="radio"], label {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    
+    button[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
 <div class="subdomain">
     <label id="custom-sub">Promote Your Business With Your Own Custom Subdomain. Put on Business Cards, Instagram, Facebook or Anywhere!!</label><br>
     <a id="subdomain-link" href="{{ full_url }}" target="_blank">{{ full_url }}</a>
@@ -25,6 +82,12 @@
 <div class="bio">
     <p>Enter A Main Bio For Your Store Here...</p>
     <textarea id="business-bio" name="business-bio">{{ bio }}</textarea>
+</div>
+
+<div class="business-services">
+    <p>Enter All The Services Your Business Offers...</p>
+    <p>Press Enter After Each Service</p>
+    <textarea id="business-services" name="business-services">{{ services }}</textarea>
 </div>
 
 <div class="styles">

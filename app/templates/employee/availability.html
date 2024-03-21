@@ -1,4 +1,30 @@
 {% block submenu %}
+<style>
+    .avail-table {
+    width: 50%; /* Set the width of the table to 100% of its container */
+    border-collapse: collapse; /* Optional: collapse table borders */
+  }
+  
+  .avail-th, .avail-td {
+    font-size: 20px;
+    padding: 10px; /* Adjust cell padding for better spacing */
+    text-align: center; /* Optional: center-align text within cells */
+  }
+  input[type="time"] {
+    font-size: 20px; /* Set the font size for time input fields */
+    width: 130px; /* Set the width of the input fields as needed */
+  }
+  
+  /* Adjust width of specific columns if needed */
+  .avail-th:first-child, .avail-td:first-child {
+    width: 20%; /* Example: Set the width of the first column to 20% */
+  }
+  .avail-button[type="submit"] {
+    padding: 7px 20px; /* Adjust padding to increase button size */
+    font-size: 16px; /* Adjust font size */
+    margin-top: 30px;
+  }
+</style>
     <h1>Availability Schedule</h1>
     <form id="availability-form" action="{{ url_for('availability.availability') }}" method="post">
         <table class="avail-table">

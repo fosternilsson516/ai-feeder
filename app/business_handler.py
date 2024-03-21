@@ -21,7 +21,7 @@ class Business():
                 finally:
                     conn.close()
 
-        def post_business_data(self, user_id, logo_url, bio, style_id):
+        def post_business_data(self, user_id, logo_url, bio, style_id, services):
             conn = connect_to_database()
             if conn is not None:
                 try:
@@ -29,7 +29,7 @@ class Business():
                     cursor.execute("SELECT business_id FROM owners WHERE user_id = %s", (user_id,))
                     business_id = cursor.fetchone()
 
-                    cursor.execute("UPDATE businesses SET logo_path = %s, bio = %s, style_id = %s WHERE business_id = %s", (logo_url, bio, style_id, business_id))
+                    cursor.execute("UPDATE businesses SET logo_path = %s, bio = %s, style_id = %s, business_services = %s WHERE business_id = %s", (logo_url, bio, style_id, services, business_id))
                     conn.commit()
                     cursor.close()
                 except psycopg2.Error as e:
@@ -54,7 +54,7 @@ class Business():
                 finally:
                     conn.close()    
 
-        def update_business_data(self, user_id, logo_url, bio, style_id):
+        def update_business_data(self, user_id, logo_url, bio, style_id, services):
             conn = connect_to_database()
             if conn is not None:
                 try:
@@ -62,7 +62,7 @@ class Business():
                     cursor.execute("SELECT business_id FROM owners WHERE user_id = %s", (user_id,))
                     business_id = cursor.fetchone()
 
-                    cursor.execute("UPDATE businesses SET bio = %s, style_id = %s WHERE business_id = %s", (bio, style_id, business_id))
+                    cursor.execute("UPDATE businesses SET bio = %s, style_id = %s, business_services = %s WHERE business_id = %s", (bio, style_id, services, business_id))
                     conn.commit()
                     cursor.close()
                 except psycopg2.Error as e:

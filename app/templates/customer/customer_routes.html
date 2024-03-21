@@ -38,7 +38,7 @@
         margin: 20px;
         text-align: center;
     }
-    .employee-profile ul {
+    ul {
         list-style: none;
     }
     .employee-profile img {
@@ -54,7 +54,6 @@
         cursor: pointer;
     }
     .employee-services ul {
-         /* Remove default list-style markers for the ul */
         margin-top: 5px;
         padding-left: 0;
     }
@@ -75,7 +74,7 @@
 <div class="services">
     <h2>Services Offered</h2>
     <ul>
-        {% for service in services %}
+        {% for service in service_list %}
             <li>{{ service }}</li>
         {% endfor %}
     </ul>

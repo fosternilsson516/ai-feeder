@@ -1,1 +1,58 @@
-###
+{% block submenu %}
+<style>
+    .box-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Adds some space between the two boxes */
+  }
+
+  .left-box, .right-box {
+    border: 1px solid #ccc; /* Adds a border around the boxes */
+    padding: 10px;
+    width: 200px; /* Adjust width as needed */
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px solid #ddd; /* Adds a border around each list item */
+    background-color: #f9f9f9;
+    list-style-type: none; /* Removes bullet points from the list */
+    padding: 0;
+  }
+
+  .left-box:hover, .right-box:hover {
+    background-color: #f9f9f9;
+  }
+</style>
+</style>
+
+</head>
+<body>
+
+<div class="box-container">
+  <div class="left-box" id="availableItems">
+    <ul>
+      <li onclick="moveItem(this)"></li>
+      <li onclick="moveItem(this)"></li>
+      <li onclick="moveItem(this)"></li>
+      <li onclick="moveItem(this)"></li>
+    </ul>
+  </div>
+  <div class="right-box" id="selectedItems">
+    <ul>
+        <li onclick="moveItem(this)">First Name</li>
+        <li onclick="moveItem(this)">Last Name</li>
+        <li onclick="moveItem(this)">Email</li>
+        <li onclick="moveItem(this)">Phone</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+function moveItem(item) {
+  const parentID = item.parentNode.parentNode.id;
+  const targetID = parentID === "availableItems" ? "selectedItems" : "availableItems";
+  document.getElementById(targetID).querySelector('ul').appendChild(item);
+}
+</script>
+</body>
+{% endblock %}

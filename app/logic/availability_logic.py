@@ -16,7 +16,7 @@ class availabilityLogic:
         if existing_availability[0] == True:
             # Unpack the availability data tuple
             _, _, start_times, stop_times, days = existing_availability[1]
-            print(existing_availability[1])
+
             # Create a dictionary to hold the availability data for each day
             availability_by_day = {}
             for day, start_time, stop_time in zip(days, start_times, stop_times):

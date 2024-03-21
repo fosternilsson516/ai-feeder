@@ -110,7 +110,8 @@ def customer_portal():
     if result is not None: 
         bio = result[7]        
         style_id = str(result[8]) 
-        return render_template('owner/customer_portal.html', full_url=full_url, bio=bio, style_id=style_id, self_bio=self_bio)
+        services = result[10]
+        return render_template('owner/customer_portal.html', full_url=full_url, bio=bio, style_id=style_id, self_bio=self_bio, services=services)
     else:
         return render_template('owner/customer_portal.html', full_url=full_url)   
     
@@ -119,9 +120,10 @@ def post_customer_portal():
     user_id = session.get('user_id')
     logo_file = request.files['fileInput']
     bio = request.form.get('business-bio')
+    services = request.form.get('business-services')
     style_id = request.form.get('style')
-    ###########################have owner enter all the services his shop offers###################################
     logo_url = None
+    print(services)
 
     if logo_file and logo_file.filename != '':
         # Determine file extension and format
@@ -140,9 +142,9 @@ def post_customer_portal():
         logo_url = f'app/static/img/logo_img_{user_id}.{file_format}'
 
 
-        business_handler.post_business_data(user_id, logo_url, bio, style_id)
+        business_handler.post_business_data(user_id, logo_url, bio, style_id, services)
     else:
-        business_handler.update_business_data(user_id, logo_url, bio, style_id) 
+        business_handler.update_business_data(user_id, logo_url, bio, style_id, services) 
 
     img_file = request.files['empFileInput']
     self_bio = request.form.get('self-bio')

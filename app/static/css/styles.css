@@ -76,37 +76,6 @@ body {
     font-size: 50px;
     margin: 0;
   }
-
-  .topnav {
-    background-color: #000000;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-    top: 0;
-  }
-  
-  .topnav ul {
-    list-style-type: none;
-    margin: 15;
-    padding: 0;
-  }
-
-  .topnav li {
-    display: inline-block; /* Display list items horizontally */
-    margin-right: 10px; /* Add some spacing between list items */
-    color: #ffffff;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-
-  .topnav li:hover {
-    background-color: #ddd;
-    color: black;
-    cursor: pointer;
-  }
   
   body, html {
     height: 100%;
@@ -120,7 +89,6 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-    caret-color: transparent;
   }
 
   .admin-container {
@@ -129,134 +97,5 @@ body {
     align-items: center;
     justify-content: center;
     height: 100%;
-    caret-color: transparent;
+    overflow: auto;
   }
-  
-  .avail-table {
-    width: 50%; /* Set the width of the table to 100% of its container */
-    border-collapse: collapse; /* Optional: collapse table borders */
-  }
-  
-  .avail-th, .avail-td {
-    font-size: 20px;
-    padding: 10px; /* Adjust cell padding for better spacing */
-    text-align: center; /* Optional: center-align text within cells */
-  }
-  input[type="time"] {
-    font-size: 20px; /* Set the font size for time input fields */
-    width: 130px; /* Set the width of the input fields as needed */
-  }
-  
-  /* Adjust width of specific columns if needed */
-  .avail-th:first-child, .avail-td:first-child {
-    width: 20%; /* Example: Set the width of the first column to 20% */
-  }
-  .avail-button[type="submit"] {
-    padding: 7px 20px; /* Adjust padding to increase button size */
-    font-size: 16px; /* Adjust font size */
-    margin-top: 30px;
-  }
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .employee-option {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-
-  .employee-option:hover {
-    background-color: #f9f9f9;
-  }
-
-  .calendar-heading {
-    text-align: center;
-  }
-
-  .arrow-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 45px; /* Adjust the font size as needed */
-  }
-
-  .arrow-button:hover {
-      text-decoration: underline; /* Optional: Add underline on hover */
-      color: blue;
-  }
-
-  .calendar-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 0%;
-    margin-top: 2%;
-  }
-
-  .calendar-td {
-    border: 1px solid black;
-    text-align: left;
-    padding: 5px;
-    width: 150px; /* Ensure each day box takes up equal space (100% / 7 days) */
-    height: 100px;
-    vertical-align: top;
-  }
-
-  .calendar-th {
-    border: 1px solid black;
-    text-align: center;
-    padding: 5px;
-    width: 150px; /* Ensure each day box takes up equal space (100% / 7 days) */
-    height: 15px;
-  }
-  .calendar-th {
-    background-color: lightgray;
-  }
-  #service-form {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    padding: 20px;
-    width: 400px; /* Adjust the width as needed */
-    height: 520px; /* Adjust the height as needed */
-    overflow-y: auto;
-  }
-  #service-form label {
-    font-weight: bold;
-  }
-  #service-form input[type="text"],
-  #service-form input[type="radio"],
-  #service-form textarea {
-    margin-bottom: 15px;
-    margin-top: 5px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  #service-form input[type="radio"] {
-    margin-right: 5px;
-  }
-  #service-form button {
-    padding: 8px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  #service-form button:hover {
-    background-color: #0056b3;
-  }
-  .minus-button {
-    margin-left: 5px;
-    cursor: pointer;
-  }
-  
