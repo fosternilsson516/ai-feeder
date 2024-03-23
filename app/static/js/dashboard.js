@@ -60,9 +60,6 @@ var addEmpCheckInterval = setInterval(function() {
 
   
   function loadContent(menuOption) {
-
-    document.getElementById('default-content').style.display = 'none';
-    
     fetch(`/dashboard/${menuOption}`)
       .then(response => response.text())
       .then(html => {
@@ -71,6 +68,11 @@ var addEmpCheckInterval = setInterval(function() {
       })
       .catch(error => console.error('Error loading content:', error));
   }
+
+  // Automatically load "setup-chat" when the page is fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    loadContent('setup_chat');
+  });
   function updateCalendar(direction, month, year) {
 
     // Send a GET request to update the calendar

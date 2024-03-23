@@ -1,0 +1,110 @@
+{% block submenu %}
+<head>
+    <meta charset="UTF-8">
+    <title>Setup Chat</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-size: 22px;
+        }
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 90vh; /* Adjust height if you want some space around the container */
+            width: 65%; /* Set the width of the chat container */
+            margin: auto; /* Center the container horizontally */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+        #messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            border-bottom: 2px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .chat-message, #chat-explanation {
+            margin-bottom: 12px;
+            padding: 8px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+        #input-area {
+            display: flex;
+            padding: 20px;
+            background: #fff; /* Ensure the input area has a distinct background */
+        }
+        textarea {
+            flex-grow: 1;
+            margin-right: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none; /* Optional: Prevents the user from resizing the textarea */
+            font-size: 22px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="messages">
+            <div id="chat-explanation">
+                <p>Welcome to the Setup Chat! Please answer the following questions to help us setup your website. Your responses will be saved and used to configure your settings.</p>
+            </div>
+            {% for question, answer in answered_questions %}
+            <div class="chat-message">
+                <strong>Q:</strong> {{ question }}
+                <br>
+                <strong>A:</strong> {{ answer }}
+            </div>
+            {% endfor %}
+            
+            {% if next_question %}
+            <div class="chat-message">
+                <strong>Q:</strong> {{ next_question }}
+            </div>
+            {% endif %}
+        </div>
+    <form id="input-area" action="{{ url_for('setup_chat.submit_answer') }}" method="post">
+        <input type="hidden" name="question_id" value="{{ question_id }}">
+        <textarea name="answer" autofocus></textarea>
+        <button type="submit">Send</button>
+    </form>
+    
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Scroll to the bottom of the chat container to show the latest question/answer
+        const chatContainer = document.getElementById('chat-container');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        // Prevent form submission on 'Enter' key in the textarea
+        const textarea = document.querySelector('textarea[name="answer"]');
+        textarea.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey && !event.ctrlKey) {
+                event.preventDefault(); // Prevents form submission
+                // Inserts a new line at the cursor position
+                const { selectionStart, selectionEnd } = textarea;
+                textarea.value = textarea.value.substring(0, selectionStart) + "\n" + textarea.value.substring(selectionEnd);
+                textarea.setSelectionRange(selectionStart + 1, selectionStart + 1);
+            }
+        });
+    });
+</script>
+
+</body>
+
+{% endblock %}

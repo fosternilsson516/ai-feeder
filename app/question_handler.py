@@ -1,0 +1,47 @@
+from app.db import connect_to_database
+import psycopg2
+
+class Questions():
+        def get_next_question(self, user_id):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        SELECT q.question_text, a.question_id AS min_question_id
+                        FROM answers a
+                        INNER JOIN owners o ON a.owner_id = o.owner_id
+                        INNER JOIN users u ON o.user_id = u.user_id
+                        INNER JOIN questions q ON a.question_id = q.question_id
+                        WHERE u.user_id = %s AND a.answer IS NULL
+                        ORDER BY a.question_id ASC
+                        LIMIT 1;
+                    """, (user_id,))
+                    result = cursor.fetchone()
+                    return result
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()
+
+        def save_text_answer(self, user_id, question_id, answer_text):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        UPDATE answers
+                        SET answer = %s
+                        WHERE owner_id = (
+                            SELECT owner_id
+                            FROM owners
+                            WHERE user_id = %s
+                        ) AND question_id = %s
+                    """, (answer_text, user_id, question_id))
+                    conn.commit()
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()              

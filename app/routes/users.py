@@ -23,11 +23,10 @@ def post_login():
 
     auth_result = user_handler.authenticate_user(email, password)
     if auth_result == True:
-        result = user_handler.store_user_role_id_session(email)
+        result = user_handler.store_user_id(email)
         if result:
-                user_id, user_role = result[0], result[1]
+                user_id = result[0]
         session['user_id'] = user_id
-        session['user_role'] = user_role
         return redirect(url_for('dashboard.dashboard'))
     else:
         # Authentication failed, display appropriate error message
@@ -45,12 +44,6 @@ def create_account():
             password_match = request.form['password_match']
             f_name = request.form['f_name']
             l_name = request.form['l_name']
-            business_name = request.form['business_name']
-            street_address = request.form['street_address']
-            city = request.form['city']
-            state = request.form['state']
-            zip_code = request.form['zip_code']
-            subdomain_name = request.form['subdomain_name']
         except BadRequestKeyError as e:
             print("Error accessing form data:", e)
             return "An error occurred while processing the form data.", 500
@@ -68,7 +61,12 @@ def create_account():
             return redirect(url_for('users.create_account'))    
 
         # Proceed with registration if passwords match
-        user_handler.create_account(email, phone_number, password_hash, f_name, l_name, business_name, street_address, city, state, zip_code, subdomain_name)
+        user_handler.create_account(email, phone_number, password_hash, f_name, l_name)
+        result = user_handler.store_user_id(email)
+        if result:
+            user_id = result[0]
+        session['user_id'] = user_id
+        user_handler.create_owner_id(user_id)
         return redirect(url_for('users.successful_reg'))
 
     # Retrieve form data from session (if available)
