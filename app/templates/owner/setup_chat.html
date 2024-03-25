@@ -25,7 +25,7 @@
             flex-direction: column;
             justify-content: flex-start;
         }
-        .chat-message, #chat-explanation {
+        #chat-explanation {
             margin-bottom: 12px;
             padding: 8px;
             background-color: #f0f0f0;
@@ -35,6 +35,27 @@
             display: flex;
             padding: 20px;
             background: #fff; /* Ensure the input area has a distinct background */
+        }
+        .question, .answer {
+            padding: 10px; /* Adds some padding around the text */
+        }
+
+        /* Optional: Additional styling to further distinguish questions from answers */
+        .question {
+            text-align: left; /* Aligns question text to the left */
+        }
+
+        .answer {
+            text-align: right; /* Aligns answer text to the right */
+            background-color: #e0e0e0; /* Optional: a slightly different background for contrast */
+            border-radius: 5px; /* Optional: rounded corners for the answer */
+            margin-left: 10px; /* Adds some space between the question and answer */
+            cursor: pointer;
+        }
+        .preformatted {
+            white-space: pre-wrap; /* Preserves white spaces and wraps text */
+            font-family: inherit; /* Optional: ensures font consistency with the surrounding text */
+            display: inline; /* Keeps the element inline */
         }
         textarea {
             flex-grow: 1;
@@ -64,46 +85,28 @@
             <div id="chat-explanation">
                 <p>Welcome to the Setup Chat! Please answer the following questions to help us setup your website. Your responses will be saved and used to configure your settings.</p>
             </div>
-            {% for question, answer in answered_questions %}
-            <div class="chat-message">
-                <strong>Q:</strong> {{ question }}
-                <br>
-                <strong>A:</strong> {{ answer }}
-            </div>
+            {% for answer, question, question_id in answered_questions %}
+                <div class="chat-message" data-question-id="{{ question_id }}" ondblclick="copyAnswerToTextarea(this)">
+                    <div class="question">
+                        <strong>Q:</strong> {{ question }}
+                    </div>
+                    <div class="answer">
+                        <strong>A:</strong> <span class="preformatted">{{ answer }}</span>
+                    </div>
+                </div>
             {% endfor %}
             
             {% if next_question %}
-            <div class="chat-message">
-                <strong>Q:</strong> {{ next_question }}
-            </div>
+                <strong>Q:</strong> <span class="preformatted">{{ next_question }}</span>
             {% endif %}
         </div>
     <form id="input-area" action="{{ url_for('setup_chat.submit_answer') }}" method="post">
         <input type="hidden" name="question_id" value="{{ question_id }}">
-        <textarea name="answer" autofocus></textarea>
+        <textarea id="autoResize" name="answer" autofocus required></textarea>
         <button type="submit">Send</button>
     </form>
     
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Scroll to the bottom of the chat container to show the latest question/answer
-        const chatContainer = document.getElementById('chat-container');
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-        // Prevent form submission on 'Enter' key in the textarea
-        const textarea = document.querySelector('textarea[name="answer"]');
-        textarea.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' && !event.shiftKey && !event.ctrlKey) {
-                event.preventDefault(); // Prevents form submission
-                // Inserts a new line at the cursor position
-                const { selectionStart, selectionEnd } = textarea;
-                textarea.value = textarea.value.substring(0, selectionStart) + "\n" + textarea.value.substring(selectionEnd);
-                textarea.setSelectionRange(selectionStart + 1, selectionStart + 1);
-            }
-        });
-    });
-</script>
 
 </body>
 

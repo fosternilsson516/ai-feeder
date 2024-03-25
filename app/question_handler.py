@@ -18,7 +18,7 @@ class Questions():
                         LIMIT 1;
                     """, (user_id,))
                     result = cursor.fetchone()
-                    return result
+                    return result 
                     cursor.close()
                 except psycopg2.Error as e:
                     print("Error executing SQL query:", e)
@@ -44,4 +44,49 @@ class Questions():
                 except psycopg2.Error as e:
                     print("Error executing SQL query:", e)
                 finally:
-                    conn.close()              
+                    conn.close()    
+
+        def save_first_question(self, user_id, service_names, times, prices):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        UPDATE owners
+                        SET service_names = %s, times = %s, prices = %s
+                        WHERE owner_id = (
+                            SELECT owner_id
+                            FROM owners
+                            WHERE user_id = %s
+                        )
+                    """, (service_names, times, prices, user_id))
+                    conn.commit()
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()   
+
+        def get_answers(self, user_id):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        SELECT a.answer, q.question_text, a.question_id
+                        FROM answers a
+                        INNER JOIN owners o ON a.owner_id = o.owner_id
+                        INNER JOIN users u ON o.user_id = u.user_id
+                        INNER JOIN questions q ON a.question_id = q.question_id
+                        WHERE u.user_id = %s AND a.answer IS NOT NULL
+                    """, (user_id,))
+                    result = cursor.fetchall()
+                    if result:
+                        return result
+                    else:
+                        return None  
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()

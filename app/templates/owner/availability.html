@@ -47,13 +47,8 @@
   }
 </style>
 
-    <div class="dropdown">
-        <button class="dropbtn" id="owner-dropdown-btn" onclick="toggleDropdown(event)">{{ full_name }}</button>
-        <div class="dropdown-content" id="employee-dropdown">
-            {% for name, id in employee_data %}
-                <button class="employee-option" data-id="{{ id }}" onclick="selectEmployee(event)">{{ name }}</button>
-            {% endfor %}
-        </div>
+    <div class="connect-calendar">
+        <button class="google-calendar"></button>
     </div>
 
 
