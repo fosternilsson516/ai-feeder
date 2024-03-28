@@ -79,5 +79,23 @@ class Users:
             except psycopg2.Error as e:
                 print("Error executing SQL query:", e)
             finally:
-                conn.close()             
+                conn.close()   
+
+    def insert_owner_id(self, user_id):
+        conn = connect_to_database()
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO reminders (owner_id)
+                    SELECT owner_id
+                    FROM owners
+                    WHERE user_id = %s
+                """, (user_id,))
+                conn.commit()
+                cursor.close()
+            except psycopg2.Error as e:
+                print("Error executing SQL query:", e)
+            finally:
+                conn.close()                      
 

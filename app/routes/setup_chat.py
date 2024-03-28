@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint, jsonify, Response
 #from app.t5_pipe import flan_t5_pipe, prompt_dict
 from app.question_handler import Questions
+import json
 
 setup_chat_bp = Blueprint('setup_chat', __name__)
 question_handler = Questions()
@@ -34,31 +35,47 @@ def submit_answer():
         question_id = request.form['question_id']
             
         if question_id == "1":
+            ###############fix this so it adds one entry at a time not an array#####
             lines = answer_text.split("\n")
 
-            service_names = []
-            times = []
-            prices = []
+            services_data = []
 
             # Step 3: Iterate over the lines
             for line in lines:
-                # Step 4: Split by comma and strip to clean spaces
                 parts = [part.strip() for part in line.split(",")]
                 
-                service_name = parts[0]
-                time = parts[1]
-                price = parts[2]
-                
-                # Append values to their respective lists
-                service_names.append(service_name)
-                times.append(time)
-                prices.append(price)
+                if len(parts) >= 3:  # Ensure the line has enough parts
+                    service_dict = {
+                        'service_name': parts[0],
+                        'time': parts[1],
+                        'price': parts[2]
+                    }
+                    
+                    # Append the dictionary to the list
+                    services_data.append(service_dict)
+            services_json = json.dumps(services_data)        
 
-                question_handler.save_first_question(user_id, service_names, times, prices)
+            question_handler.save_first_question(user_id, services_json)
             
             pass
         elif question_id == "2":
-            #query to set reminders
+            lines = answer_text.split("\n")
+
+            reminder_data = []
+
+            for line in lines:
+                parts = [part.strip() for part in line.split(",")]
+                if len(parts) >= 2:  # Ensure the line has enough parts
+                    reminder_dict = {
+                        'reminder_type': parts[0],
+                        'reminder_time': parts[1],
+                    }
+                    
+                    # Append the dictionary to the list
+                    reminder_data.append(reminder_dict)
+            reminder_json = json.dumps(reminder_data)        
+
+            question_handler.save_second_question(user_id, reminder_json)
             
             pass
         elif question_id == "3":

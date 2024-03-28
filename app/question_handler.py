@@ -46,26 +46,47 @@ class Questions():
                 finally:
                     conn.close()    
 
-        def save_first_question(self, user_id, service_names, times, prices):
+        def save_first_question(self, user_id, services_json):
             conn = connect_to_database()
             if conn is not None:
                 try:
                     cursor = conn.cursor()
                     cursor.execute("""
                         UPDATE owners
-                        SET service_names = %s, times = %s, prices = %s
+                        SET services = %s
                         WHERE owner_id = (
                             SELECT owner_id
                             FROM owners
                             WHERE user_id = %s
                         )
-                    """, (service_names, times, prices, user_id))
+                    """, (services_json, user_id))
                     conn.commit()
                     cursor.close()
                 except psycopg2.Error as e:
                     print("Error executing SQL query:", e)
                 finally:
                     conn.close()   
+
+        def save_second_question(self, user_id, reminder_json):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        UPDATE owners
+                        SET reminder = %s
+                        WHERE owner_id = (
+                            SELECT owner_id
+                            FROM owners
+                            WHERE user_id = %s
+                        )
+                    """, (reminder_json, user_id))
+                    conn.commit()
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()                     
 
         def get_answers(self, user_id):
             conn = connect_to_database()

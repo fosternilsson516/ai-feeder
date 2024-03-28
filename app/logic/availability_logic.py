@@ -13,7 +13,7 @@ class availabilityLogic:
         existing_availability = availability_handler.get_avail(user_id)
 
         # If user has existing availability data, retrieve the data
-        if existing_availability[0] == True:
+        if existing_availability:
             # Unpack the availability data tuple
             _, _, start_times, stop_times, days = existing_availability[1]
 
@@ -60,7 +60,7 @@ class availabilityLogic:
         existing_availability = availability_handler.get_avail(user_id)
 
         # If user has existing availability data, update the corresponding row
-        if existing_availability[0] == True:
+        if existing_availability:
             # Update existing availability data in the database
             availability_handler.update_avail(user_id, days, start_times, stop_times)
         else:
