@@ -1,13 +1,7 @@
 {% block submenu %}
-<head>
-    <meta charset="UTF-8">
+
     <title>Setup Chat</title>
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-size: 22px;
-        }
         #chat-container {
             display: flex;
             flex-direction: column;
@@ -77,13 +71,11 @@
         button:hover {
             background-color: #0056b3;
         }
-    </style>
-</head>
-<body>
-    <div id="chat-container">
+</style>
+    <div id="chat-container" >
         <div id="messages">
             <div id="chat-explanation">
-                <p>Welcome to the Setup Chat! Please answer the following questions to help us setup your website. Your responses will be saved and used to configure your settings.</p>
+                <p>Welcome to the Setup Chat! Please answer the following questions to help us setup your admin bot. Your responses will be saved and used to help new customers schedule appointments and answer any questions.</p>
             </div>
             {% for answer, question, question_id in answered_questions %}
                 <div class="chat-message" data-question-id="{{ question_id }}" ondblclick="copyAnswerToTextarea(this)">
@@ -107,7 +99,9 @@
     </form>
     
 </div>
-
-</body>
+<script>
+    // Call the function after the DOM content is fully loaded
+    scrollToBottom();
+</script>
 
 {% endblock %}

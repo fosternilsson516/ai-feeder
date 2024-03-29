@@ -3,44 +3,21 @@ import psycopg2
 import psycopg2.extras
 
 class Availability:
-    def submit_avail(self, user_id, days, start_times, stop_times):
-            conn = connect_to_database()
-            if conn is not None:
-                try:
-                    cursor = conn.cursor()
-                    # Fetch the employee_id from the user_id
-                    cursor.execute("""
-                        INSERT INTO availability
-                        (employee_id, days, start_times, stop_times) VALUES
-                        (%s, %s, %s)
-                        WHERE owner_id = (
-                            SELECT owner_id
-                            FROM owners
-                            WHERE user_id = %s
-                        )
-                    """, (days, start_times, stop_times, user_id))
-                    conn.commit()
-                    cursor.close()
-                except psycopg2.Error as e:
-                    print("Error executing SQL query:", e)
-                finally:
-                    conn.close()
-
     def get_avail(self, user_id):
         conn = connect_to_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    SELECT *   
-                    FROM availability 
+                    SELECT availability   
+                    FROM owners
                     WHERE owner_id = (
                         SELECT owner_id
                         FROM owners
                         WHERE user_id = %s
                     )
                 """, (user_id,))
-                availability_data = cursor.fetchone()
+                availability_data = cursor.fetchone()[0]
                 if availability_data:
                     # If availability_id exists, availability data exists for the user
                     return availability_data
@@ -53,20 +30,20 @@ class Availability:
             finally:
                 conn.close()
 
-    def update_avail(self, user_id, days, start_times, stop_times):
+    def update_avail(self, user_id, availability_json):
         conn = connect_to_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    UPDATE availability
-                    SET days = %s, start_times = %s, stop_times = %s
+                    UPDATE owners
+                    SET availability = %s
                     WHERE owner_id = (
                         SELECT owner_id
                         FROM owners
                         WHERE user_id = %s
                     )
-                """, (days, start_times, stop_times, user_id))
+                """, (availability_json, user_id))
                 conn.commit()
                 cursor.close()
             except psycopg2.Error as e:

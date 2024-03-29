@@ -67,6 +67,7 @@ var addEmpCheckInterval = setInterval(function() {
         document.querySelector('.container').innerHTML = html;
         if (menuOption === 'setup_chat') {
           initializeSetupChat();
+          scrollToBottom()
         }
       })
       .catch(error => console.error('Error loading content:', error));
@@ -113,11 +114,16 @@ function copyAnswerToTextarea(chatMessageElement, textarea) {
       textarea.setSelectionRange(textarea.value.length, textarea.value.length);
   }
 }
+function scrollToBottom() {
+  const chatMessages = document.getElementById('messages');
+  if (chatMessages) {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+}
   // Automatically load "setup-chat" when the page is fully loaded
   document.addEventListener('DOMContentLoaded', function() {
     loadContent('setup_chat');
   });
- 
 
   function validateForm() {
     var password = document.getElementById("password").value;

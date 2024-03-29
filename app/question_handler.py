@@ -23,7 +23,32 @@ class Questions():
                 except psycopg2.Error as e:
                     print("Error executing SQL query:", e)
                 finally:
-                    conn.close()
+                    conn.close()  
+
+        def get_answers(self, user_id):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        SELECT a.answer, q.question_text, a.question_id
+                        FROM answers a
+                        INNER JOIN owners o ON a.owner_id = o.owner_id
+                        INNER JOIN users u ON o.user_id = u.user_id
+                        INNER JOIN questions q ON a.question_id = q.question_id
+                        WHERE u.user_id = %s AND a.answer IS NOT NULL
+                        ORDER BY a.question_id ASC
+                    """, (user_id,))
+                    result = cursor.fetchall()
+                    if result:
+                        return result
+                    else:
+                        return None  
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()                                    
 
         def save_text_answer(self, user_id, question_id, answer_text):
             conn = connect_to_database()
@@ -46,20 +71,20 @@ class Questions():
                 finally:
                     conn.close()    
 
-        def save_first_question(self, user_id, services_json):
+        def save_first_question(self, user_id, service_text):
             conn = connect_to_database()
             if conn is not None:
                 try:
                     cursor = conn.cursor()
                     cursor.execute("""
                         UPDATE owners
-                        SET services = %s
+                        SET service_text = %s
                         WHERE owner_id = (
                             SELECT owner_id
                             FROM owners
                             WHERE user_id = %s
                         )
-                    """, (services_json, user_id))
+                    """, (service_text, user_id))
                     conn.commit()
                     cursor.close()
                 except psycopg2.Error as e:
@@ -67,47 +92,86 @@ class Questions():
                 finally:
                     conn.close()   
 
-        def save_second_question(self, user_id, reminder_json):
+        def save_second_question(self, user_id, special_instructions):
             conn = connect_to_database()
             if conn is not None:
                 try:
                     cursor = conn.cursor()
                     cursor.execute("""
                         UPDATE owners
-                        SET reminder = %s
+                        SET special_instructions = %s
                         WHERE owner_id = (
                             SELECT owner_id
                             FROM owners
                             WHERE user_id = %s
                         )
-                    """, (reminder_json, user_id))
+                    """, (special_instructions, user_id))
                     conn.commit()
                     cursor.close()
                 except psycopg2.Error as e:
                     print("Error executing SQL query:", e)
                 finally:
-                    conn.close()                     
+                    conn.close()  
 
-        def get_answers(self, user_id):
+        def save_third_question(self, user_id, business_address):
             conn = connect_to_database()
             if conn is not None:
                 try:
                     cursor = conn.cursor()
                     cursor.execute("""
-                        SELECT a.answer, q.question_text, a.question_id
-                        FROM answers a
-                        INNER JOIN owners o ON a.owner_id = o.owner_id
-                        INNER JOIN users u ON o.user_id = u.user_id
-                        INNER JOIN questions q ON a.question_id = q.question_id
-                        WHERE u.user_id = %s AND a.answer IS NOT NULL
-                    """, (user_id,))
-                    result = cursor.fetchall()
-                    if result:
-                        return result
-                    else:
-                        return None  
+                        UPDATE owners
+                        SET business_address = %s
+                        WHERE owner_id = (
+                            SELECT owner_id
+                            FROM owners
+                            WHERE user_id = %s
+                        )
+                    """, (business_address, user_id))
+                    conn.commit()
                     cursor.close()
                 except psycopg2.Error as e:
                     print("Error executing SQL query:", e)
                 finally:
-                    conn.close()
+                    conn.close()  
+
+        def save_fourth_question(self, user_id, subdomain):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        UPDATE owners
+                        SET subdomain = %s
+                        WHERE owner_id = (
+                            SELECT owner_id
+                            FROM owners
+                            WHERE user_id = %s
+                        )
+                    """, (subdomain, user_id))
+                    conn.commit()
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()  
+
+        def save_fifth_question(self, user_id, business_name):
+            conn = connect_to_database()
+            if conn is not None:
+                try:
+                    cursor = conn.cursor()
+                    cursor.execute("""
+                        UPDATE owners
+                        SET business_name = %s
+                        WHERE owner_id = (
+                            SELECT owner_id
+                            FROM owners
+                            WHERE user_id = %s
+                        )
+                    """, (business_name, user_id))
+                    conn.commit()
+                    cursor.close()
+                except psycopg2.Error as e:
+                    print("Error executing SQL query:", e)
+                finally:
+                    conn.close()                                                                              

@@ -59,10 +59,6 @@
             background-color: #357AE8;
         }
 
-        .go-back {
-            text-align: center;
-            width: 100%;
-        }
     </style>
 </head>
 <body>
@@ -77,10 +73,7 @@
             </li>
             {% endfor %}
         </ul>
-        <button type="submit">Submit Selection</button>
+        <a href="{{ url_for('dashboard.dashboard') }}"><button type="submit">Submit</button></a>
     </form>
-    <div class="go-back">
-        <a href="{{ url_for('dashboard.dashboard') }}"><button type="button">Go Back to Dashboard</button></a>
-    </div>
 </body>
 </html>
