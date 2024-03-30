@@ -8,56 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
       menu.classList.toggle('open');
   });
 });
-
-  var addBtnCheckInterval = setInterval(function() {
-  var addBtn = document.getElementById('add-btn');
-  if (addBtn !== null) {
-      clearInterval(addBtnCheckInterval); // Stop checking
-      addBtn.addEventListener('click', function() {
-      var serviceName = document.getElementById('service-name').value;
-      var serviceType = document.querySelector('input[name="service-type"]:checked');
-      var amount = document.getElementById('amount').value;
-
-      if (!serviceName || !serviceType || !amount) {
-          alert("Please fill in all fields.");
-          return;
-      }
-
-      var serviceTypeValue = serviceType.value;
-      var result = serviceName + ": " + serviceTypeValue + " - $" + amount;
-
-      var serviceListInput = document.getElementById('service-list');
-      serviceListInput.value +='\n' + result + '\n';
-    });
-  }
-}, 100);
-
-var addEmpCheckInterval = setInterval(function() {
-  var addEmp = document.getElementById('add-emp');
-  if (addEmp !== null) {
-      clearInterval(addEmpCheckInterval); // Stop checking
-      addEmp.addEventListener('click', function() {
-      var email = document.getElementById('email').value;
-      var phoneNumber = document.getElementById('phone_number').value;
-      var password = document.getElementById('password').value;
-      var firstName = document.getElementById('first-name').value;
-      var lastName = document.getElementById('last-name').value;
-
-      if (!email || !phoneNumber || !password || !firstName || !lastName) {
-          alert("Please fill in all fields.");
-          return;
-      }
-
-      var result = firstName + ", " + lastName;
-      var hiddenVals = email + ", " + phoneNumber + ', ' + password;
-      var employeeListInput = document.getElementById('employee-list');
-      employeeListInput.value += result;
-      var hiddenEmployeeListInput = document.getElementById('hidden-employee-list');
-      hiddenEmployeeListInput.value += '\n' + hiddenVals + '\n';
-    });
-  }
-}, 100);
-
   
   function loadContent(menuOption) {
     fetch(`/dashboard/${menuOption}`)
@@ -67,13 +17,12 @@ var addEmpCheckInterval = setInterval(function() {
         document.querySelector('.container').innerHTML = html;
         if (menuOption === 'setup_chat') {
           initializeSetupChat();
-          scrollToBottom()
         }
       })
       .catch(error => console.error('Error loading content:', error));
   }
-
   function initializeSetupChat() {
+    scrollToBottom();
     const textarea = document.querySelector('textarea[name="answer"]');
 
     if (textarea) {
@@ -120,50 +69,35 @@ function scrollToBottom() {
       chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 }
-  // Automatically load "setup-chat" when the page is fully loaded
-  document.addEventListener('DOMContentLoaded', function() {
-    loadContent('setup_chat');
-  });
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.container').addEventListener('submit', function(e) {
+    if (e.target && e.target.id === 'myForm') {
+      e.preventDefault();
+      const form = document.getElementById('myForm');
+       
+      console.log('Form submission prevented. JS is handling submission.');
 
-  function validateForm() {
-    var password = document.getElementById("password").value;
-    var password_match = document.getElementById("password_match").value;
-
-    if (password !== password_match) {
-        alert("Passwords do not match");
-        return false; // Prevent form submission
-    }
-    return true; // Allow form submission
+      const formData = new FormData(form);
+      fetch(form.action, {
+          method: 'POST',
+          body: formData,
+      })
+      
+      .then(response => {
+          if (response.status === 204) {
+              // Assuming 'menuOption' is known or stored globally
+              loadContent('setup_chat'); // Or dynamically determine where to redirect
+          } else {
+              console.error('Server error');
+              // Handle server error (e.g., show error message)
+          }
+      })
+      .catch(error => console.error('Error:', error));
   }
+});
+});
 
 
-    // Define the formatPhoneNumber function
-    function formatPhoneNumber(phoneNumberInput) {
-            var phoneNumber = phoneNumberInput.value;
-            
-            // Remove all non-numeric characters
-            var formattedPhoneNumber = phoneNumber.replace(/\D/g, '');
-
-            // Apply the desired formatting
-            if (formattedPhoneNumber.length >= 3 && formattedPhoneNumber.length <= 6) {
-                formattedPhoneNumber = formattedPhoneNumber.slice(0, 3) + '-' + formattedPhoneNumber.slice(3);
-            } else if (formattedPhoneNumber.length >= 7) {
-                formattedPhoneNumber = formattedPhoneNumber.slice(0, 3) + '-' + formattedPhoneNumber.slice(3, 6) + '-' + formattedPhoneNumber.slice(6);
-            }
-
-            // Update the input field value
-            phoneNumberInput.value = formattedPhoneNumber;
-        }
-
-  function checkPhoneNumberInput() {
-    var phoneNumberInput = document.getElementById("phone_number");
-    if (phoneNumberInput !== null) {
-        formatPhoneNumber(phoneNumberInput); // Format phone number if field exists
-    }
-  }
-  
-  // Set interval to continuously check for phone number input field
-  var phoneNumberCheckInterval = setInterval(checkPhoneNumberInput, 100);
 
  
 

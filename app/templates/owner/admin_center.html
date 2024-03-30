@@ -1,51 +1,12 @@
 {% block submenu %}
 <style>
-  .topnav {
-    background-color: #000000;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    caret-color: transparent;
-  }
-  
-  .topnav ul {
-    list-style-type: none;
-    margin: 15;
-    padding: 0;
-  }
 
-  .topnav li {
-    display: inline-block; /* Display list items horizontally */
-    margin-right: 10px; /* Add some spacing between list items */
-    color: #ffffff;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-
-  .topnav li:hover {
-    background-color: #ddd;
-    color: black;
-    cursor: pointer;
-  }
 </style>>
-<div class="topnav">
-    <ul>
-        <li onclick="loadSubMenu('manage_employees')">Manage Employees</li>
-        <li onclick="loadSubMenu('customer_info')">Customer Information Requirments</li>
-        <li onclick="loadSubMenu('customer_portal')">Customize</li>
-        <!-- Add more list items as needed -->
-    </ul>
+<div class="subdomain">
+  <label id="custom-sub">Promote Your Business With Your Own Custom Subdomain. Put on Business Cards, Instagram, Facebook or Anywhere!!</label><br>
+  <a id="subdomain-link" href="{{ full_url }}" target="_blank">{{ full_url }}</a>
 </div>
 
 
-<!-- Main Content Area -->
-<div class="admin-container">
-  <!-- Sub-menu content will be rendered here -->
-  {% block admin %}{% endblock %}
 
-</div>
 {% endblock %}

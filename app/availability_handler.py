@@ -51,21 +51,18 @@ class Availability:
             finally:
                 conn.close() 
 
-    def get_user_id(self, subdirectory, subdomain):
+    def get_owner_data(self, subdomain):
         conn = connect_to_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
-
-                cursor.execute("SELECT business_id FROM businesses WHERE subdomain_name = %s", (subdomain,))
-                business_id = cursor.fetchone()[0]
-
-                cursor.execute("SELECT owner_id FROM owners WHERE business_id = %s", (business_id,))
-                owner_id = cursor.fetchone()[0]
-
-                cursor.execute("SELECT user_id FROM employees WHERE subdirectory_name = %s AND owner_id = %s", (subdirectory, owner_id))
-                user_id = cursor.fetchone()[0]
-                return user_id
+                cursor.execute("""
+                    SELECT owner_id, availability, calendar_ids, service_text, special_instructions, business_address   
+                    FROM owners
+                    WHERE subdomain = %s
+                """, (subdomain,))
+                owner_data = cursor.fetchone()
+                return owner_data
                 cursor.close()
             except psycopg2.Error as e:
                 print("Error executing SQL query:", e)
@@ -138,4 +135,26 @@ class Availability:
             except psycopg2.Error as e:
                 print("Error executing SQL query:", e)
             finally:
-                conn.close()                                     
+                conn.close() 
+
+    def get_subdomain(self, user_id):
+        conn = connect_to_database()
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    SELECT subdomain
+                    FROM owners
+                    WHERE owner_id = (
+                        SELECT owner_id
+                        FROM owners
+                        WHERE user_id = %s
+                    )
+                """, (user_id,))
+                subdomain = cursor.fetchone()[0]
+                return subdomain
+                cursor.close()
+            except psycopg2.Error as e:
+                print("Error executing SQL query:", e)
+            finally:
+                conn.close()                                                     

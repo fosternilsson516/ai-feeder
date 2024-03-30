@@ -154,24 +154,4 @@ class Questions():
                     print("Error executing SQL query:", e)
                 finally:
                     conn.close()  
-
-        def save_fifth_question(self, user_id, business_name):
-            conn = connect_to_database()
-            if conn is not None:
-                try:
-                    cursor = conn.cursor()
-                    cursor.execute("""
-                        UPDATE owners
-                        SET business_name = %s
-                        WHERE owner_id = (
-                            SELECT owner_id
-                            FROM owners
-                            WHERE user_id = %s
-                        )
-                    """, (business_name, user_id))
-                    conn.commit()
-                    cursor.close()
-                except psycopg2.Error as e:
-                    print("Error executing SQL query:", e)
-                finally:
-                    conn.close()                                                                              
+                                                                            

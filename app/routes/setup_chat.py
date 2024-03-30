@@ -18,7 +18,7 @@ def get_setup_chat():
     if result:
         next_question = result[0]
         question_id = result[1]
-    if question_id == 6:
+    if question_id == 5:
         question_id = []    
 
     answered_questions = question_handler.get_answers(user_id)
@@ -58,16 +58,10 @@ def submit_answer():
             
             pass
         elif question_id == "5":
-            business_name = answer_text       
-
-            question_handler.save_fifth_question(user_id, business_name)
-            
-            pass
-        elif question_id == "6":
          
             return redirect(url_for('dashboard.dashboard')) 
               
     else:
         flash('You need to be logged in to submit answers.', 'error')
     question_handler.save_text_answer(user_id, question_id, answer_text)    
-    return redirect(url_for('dashboard.dashboard'))
+    return Response(status=204)

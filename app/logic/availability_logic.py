@@ -1,12 +1,10 @@
 from app.availability_handler import Availability
-from app.employee_handler import Employee
 from werkzeug.security import generate_password_hash
 from datetime import time, datetime
 from flask import request, session
 import json
 
 availability_handler = Availability()
-employee_handler = Employee()
 
 class availabilityLogic:
     
