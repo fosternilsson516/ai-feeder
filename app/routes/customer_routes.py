@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, Response
+from flask import render_template, Blueprint, request, Response, jsonify
 from app.availability_handler import Availability
 from app.gpt_neo import qa_pipeline
 import torch
@@ -30,7 +30,9 @@ def post_message(subdomain):
 
         # Correct usage of the question-answering pipeline
         generated_results = qa_pipeline(qa_input)
-        print(generated_results['answer'])
+        answer = generated_results['answer']
+        print(question, answer)
 
-    
-    return Response(status=204)  
+        return jsonify({"question": question, "answer": answer})
+
+    return jsonify({"error": "No data found"}), 404  
