@@ -69,14 +69,20 @@ function scrollToBottom() {
       chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 }
+function displayMessage(message, type) {
+  const messageAlertDiv = document.getElementById('message-alert');
+  messageAlertDiv.textContent = message; // Sets the text of the message
+  messageAlertDiv.className = 'alert'; // Apply the base alert class
+  messageAlertDiv.classList.add(type); // Adds a class for styling based on the message type ('error', 'success', etc.)
+  messageAlertDiv.style.display = 'block'; // Make the message alert visible
+}
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.container').addEventListener('submit', function(e) {
     if (e.target && e.target.id === 'myForm') {
       e.preventDefault();
-      const form = document.getElementById('myForm');
        
       console.log('Form submission prevented. JS is handling submission.');
-
+      const form = e.target;
       const formData = new FormData(form);
       fetch(form.action, {
           method: 'POST',
@@ -86,13 +92,21 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(response => {
           if (response.status === 204) {
               // Assuming 'menuOption' is known or stored globally
-              loadContent('setup_chat'); // Or dynamically determine where to redirect
+              loadContent('setup_chat'); 
+          } else if (response.status === 409) {
+            return response.json().then(data => {
+              displayMessage(data.message, "error");
+          });    
           } else {
               console.error('Server error');
               // Handle server error (e.g., show error message)
+              displayMessage("An unexpected error occurred. Please try again.", "error");
           }
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        console.error('Error:', error);
+        displayMessage("A network error occurred. Please check your connection and try again.", "error");
+    });
   }
 });
 });

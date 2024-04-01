@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint, jsonify, Response
-#from app.t5_pipe import flan_t5_pipe, prompt_dict
 from app.question_handler import Questions
 import json
 
@@ -54,9 +53,16 @@ def submit_answer():
         elif question_id == "4":
             subdomain = answer_text       
 
-            question_handler.save_fourth_question(user_id, subdomain)
+            result = question_handler.save_fourth_question(user_id, subdomain)
+
+            if "error" in result:
+                # If there was an error, flash the error message
+                flash(result["error"])  # Second argument 'error' is an optional category
+            elif "success" in result:
+                # If successful, flash the success message
+                flash(result["success"]) 
             
-            pass
+            return Response(status=409)
         elif question_id == "5":
          
             return redirect(url_for('dashboard.dashboard')) 

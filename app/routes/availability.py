@@ -3,9 +3,9 @@ from app.logic.availability_logic import availabilityLogic
 from app.availability_handler import Availability
 from google_auth_oauthlib.flow import Flow
 from app.db import client_config
-from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from app.query_calendar import googleCalendar
 import os
 
 # Allow OAuthlib to utilize insecure transport (HTTP) for development purposes
@@ -14,6 +14,7 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 availability_bp = Blueprint('availability', __name__)
 availability_logic = availabilityLogic()
 availability_handler = Availability()
+query_calendar = googleCalendar()
 
 @availability_bp.route('/', methods=['GET'])
 def get_availability():
@@ -40,17 +41,7 @@ def get_google_oauth_flow():
         # Make sure the redirect_uri is dynamically assigned based on your Flask app routing
         redirect_uri=redirect_uri
     )
-    return flow  
-
-def get_google_service(credentials):
-    service = build('calendar', 'v3', credentials=credentials)
-    return service 
-
-def list_user_calendars(service):
-    calendars_result = service.calendarList().list().execute()
-    calendars = calendars_result.get('items', [])
-    
-    return calendars        
+    return flow         
 
 @availability_bp.route('/authorize')
 def authorize():
@@ -71,7 +62,6 @@ def oauth2callback():
         return redirect(url_for('users.login'))
     flow = get_google_oauth_flow()
     authorization_response = request.url
-    print(authorization_response)
     flow.fetch_token(authorization_response=authorization_response)
 
     availability_handler.save_user_credentials(
@@ -92,12 +82,8 @@ def view_calendars():
     if user_id is None:
         return redirect(url_for('users.login'))  # Redirect to login if not authenticated
 
-    # Assuming you have stored and can retrieve user-specific credentials here
-    credentials_dict = availability_handler.get_user_credentials(user_id)
-    credentials = Credentials(**credentials_dict)
 
-
-    service = get_google_service(credentials)
+    service = query_calendar.get_google_service(user_id)
     calendars = list_user_calendars(service)
    
 
@@ -107,7 +93,19 @@ def view_calendars():
 @availability_bp.route('/post_calendar_selection', methods=['POST'])
 def post_calendar_selection():
     user_id = session.get('user_id')
-    calendar_ids = request.form.getlist('calendar_ids')  
-    availability_handler.save_cal_id(user_id, calendar_ids)
-    return redirect(url_for('dashboard.dashboard'))            
+    calendar_id = request.form.getlist('calendar_ids')
+    service = query_calendar.get_google_service(user_id) 
+    time_zone = get_user_calendar_timezone(service, calendar_id) 
+    print(time_zone)
+    availability_handler.save_cal_info(user_id, calendar_ids, time_zone)
+    return redirect(url_for('dashboard.dashboard'))
+
+def get_user_calendar_timezone(service, calendar_id):
+    calendar = service.calendars().get(calendarId=calendar_id).execute()
+    return calendar['timeZone']    
+
+def list_user_calendars(service):
+    calendars_result = service.calendarList().list().execute()
+    calendars = calendars_result.get('items', [])
+    return calendars                  
      

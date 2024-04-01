@@ -11,11 +11,7 @@ class Availability:
                 cursor.execute("""
                     SELECT availability   
                     FROM owners
-                    WHERE owner_id = (
-                        SELECT owner_id
-                        FROM owners
-                        WHERE user_id = %s
-                    )
+                    WHERE user_id = %s
                 """, (user_id,))
                 availability_data = cursor.fetchone()[0]
                 if availability_data:
@@ -38,11 +34,7 @@ class Availability:
                 cursor.execute("""
                     UPDATE owners
                     SET availability = %s
-                    WHERE owner_id = (
-                        SELECT owner_id
-                        FROM owners
-                        WHERE user_id = %s
-                    )
+                    WHERE user_id = %s
                 """, (availability_json, user_id))
                 conn.commit()
                 cursor.close()
@@ -57,7 +49,7 @@ class Availability:
             try:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    SELECT owner_id, availability, calendar_ids, service_text, special_instructions, business_address   
+                    SELECT user_id, time_zone, token, refresh_token, token_uri, client_id, client_secret, scopes, availability, calendar_ids, service_text, special_instructions, business_address   
                     FROM owners
                     WHERE subdomain = %s
                 """, (subdomain,))
@@ -77,11 +69,7 @@ class Availability:
                 cursor.execute("""
                     UPDATE owners
                     SET token = %s, refresh_token = %s, token_uri = %s, client_id = %s, client_secret = %s, scopes = %s
-                    WHERE owner_id = (
-                        SELECT owner_id
-                        FROM owners
-                        WHERE user_id = %s
-                    )
+                    WHERE user_id = %s
                 """, (access_token, refresh_token, token_uri, client_id, client_secret, scopes, user_id))
                 conn.commit()
                 cursor.close()
@@ -98,11 +86,7 @@ class Availability:
                 cursor.execute("""
                     SELECT token, refresh_token, token_uri, client_id, client_secret, scopes
                     FROM owners
-                    WHERE owner_id = (
-                        SELECT owner_id
-                        FROM owners
-                        WHERE user_id = %s
-                    )
+                    WHERE user_id = %s
                 """, (user_id,))
                 credential_record = cursor.fetchone()
                 if credential_record:
@@ -116,20 +100,16 @@ class Availability:
             finally:
                 conn.close()  
 
-    def save_cal_id(self, user_id, calendar_ids):
+    def save_cal_info(self, user_id, calendar_ids, time_zone):
         conn = connect_to_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 cursor.execute("""
                     UPDATE owners
-                    SET calendar_ids = %s
-                    WHERE owner_id = (
-                        SELECT owner_id
-                        FROM owners
-                        WHERE user_id = %s
-                    )
-                """, (calendar_ids, user_id))
+                    SET calendar_ids = %s, time_zone = %s
+                    WHERE user_id = %s
+                """, (calendar_ids, time_zone, user_id))
                 conn.commit()
                 cursor.close()
             except psycopg2.Error as e:
@@ -145,11 +125,7 @@ class Availability:
                 cursor.execute("""
                     SELECT subdomain
                     FROM owners
-                    WHERE owner_id = (
-                        SELECT owner_id
-                        FROM owners
-                        WHERE user_id = %s
-                    )
+                    WHERE user_id = %s
                 """, (user_id,))
                 subdomain = cursor.fetchone()[0]
                 return subdomain
