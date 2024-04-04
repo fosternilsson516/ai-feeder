@@ -16,15 +16,40 @@
 
 <div class="menu">
   <ul>
-    <li onclick="loadContent('setup_chat')">Setup Chat</li>
-    <li onclick="loadContent('availability')">Availability</li>
-    <li onclick="loadContent('admin_center')">Admin Center</li>
-    <li onclick="loadContent('help')">Help</li>
+    <li onclick="loadContent('setup_chat')">AI Builder</li>
+    <li onclick="loadContent('url')">My URL</li>
   </ul>
 </div>
 
+<div id="default-content" class="default-content">
+<div class="header">
+  <img src="../static/img/ployease_design.png" alt="Ployease Logo" class="logo">
+</div>
+  <div class="app-summary">
+    <h2>Welcome to Ployease: Unlocking the Power of AI for Your Information!</h2>
+    <p>Congratulations on taking the first step towards transforming how you interact with information. Ployease is designed to make your life easier and more efficient. Whether you're a student, researcher, professional, or just curious, my platform is tailored to meet your needs. This space is not just about what we've created; it's about what you can create and discover.</p>
+    <h2>Getting Started Is Simple:</h2>
+    <p>Discover the AI Builder: Begin your journey in the upper left corner of our site. Click on the side menu to unveil our innovative AI Builder. This is where your creativity can run wild.</p>
+    <p>Feed the AI: Type or paste any text—meeting notes, textbook excerpts, research papers, or any text you wish to delve into deeper. The richer the details, the smarter and more helpful the AI becomes.</p>
+    <p>Generate Your Unique URL: After submitting your text, navigate to "My URL" to create a personalized subdomain. This is where the magic happens.</p>
+    <h3>Empower Your Information:</h3>
+    <p>With the link you generate, you're not just saving information; you're empowering it. You can:</p>
+    <ul>
+      <li>Sift Through Data Effortlessly: Use the message box to query specific information without wading through everything manually. Perfect for when you're looking for that needle in a haystack.</li>
+      <li>Share and Collaborate: Make your information accessible to colleagues, friends, or anyone who might benefit. They can ask questions and interact with your data directly, fostering collaboration and knowledge sharing.</li>
+    </ul>
+    <h3>Beyond the Basics:</h3>
+    <p>Imagine transforming meeting transcripts into interactive FAQs, turning dense research into accessible summaries, or creating a dynamic repository of study materials that talks back. The possibilities are as limitless as your imagination.</p>
+    <h2>What's Next?</h2>
+    <p>This is just the beginning. Ployease is continuously evolving, with new features and updates announced right here. Your feedback and ideas are the seeds for our growth, helping me create an even more powerful and user-friendly platform.</p>
+    <p>Join me on this exciting journey. Explore, experiment, and expand the horizons of what you can achieve with Ployease.</p>
+  </section>
+  </div>
+
+</div>
+
 <!-- Content placeholder -->
-<div class="container">
+<div id="submenu-content" class="container" style="display: none;">
   <!-- Sub-menu content will be rendered here -->
   {% block submenu %}{% endblock %}
 

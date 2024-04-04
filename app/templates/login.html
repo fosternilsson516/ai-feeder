@@ -7,25 +7,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #2B3A67; /* Dark blue background */
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    padding: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.forgot-password, .forgot-password:link, .forgot-password:visited {
+    display: block;
+    color: #adc6ff; /* A light blue to be visible against the dark background */
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+.forgot-password:hover, .forgot-password:active {
+    text-decoration: underline;
+    color: #c5d1ff;
+}
+
+.messages p {
+    background-color: #6678B4; /* Lighter blue for flash messages */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.btn {
+    display: inline-block;
+    background-color: #4F5D95; /* Lighter blue for buttons */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 10px 10px;
+    cursor: pointer;
+}
+.btn:hover {
+    opacity: 0.8;
+}
+.logo {
+    max-width: 20%;
+    margin: 0 auto 30px;
+}
+</style>
 <body>
-    <h1>Login</h1>
-    <!-- Check if there are flash messages and display them -->
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-    <form action="{{ url_for('users.post_login') }}" method="post">
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
+    <header>
+        <img src="static/img/ployease_design.png" alt="Ployease Logo" class="logo">
+    </header>
+    <div class="login-container">
+        <h1>Login</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('users.post_login') }}" method="post" class="form">
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+        <button type="submit" class="btn">Login</button>
     </form>
-    <a href="{{ url_for('users.forgot_password') }}">Forgot Password?</a>
+   <!-- <a href="{{ url_for('users.forgot_password') }}" class="forgot-password">Forgot Password</a> -->
+</div>
 </body>
 </html>

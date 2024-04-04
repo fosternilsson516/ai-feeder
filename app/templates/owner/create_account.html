@@ -1,5 +1,3 @@
-<!-- templates/create_account.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,37 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
 </head>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #2B3A67; /* Dark blue background */
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+}
+
+.container {
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    padding: 20px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    background: #fff;
+    color: #333;
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flashes li {
+    background-color: #6678B4; /* Lighter blue for flash messages */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.btn {
+    display: inline-block;
+    background-color: #4F5D95; /* Lighter blue for buttons */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 10px 10px;
+    cursor: pointer;
+}
+.btn:hover {
+    opacity: 0.8;
+}
+.logo {
+    max-width: 20%;
+    margin: 0 auto 30px;
+}
+</style>
 <body>
-    <h1>Create Account</h1>
+    <header>
+        <img src="static/img/ployease_design.png" alt="Ployease Logo" class="logo">
+    </header>
+    <div class="container">
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul class="flashes">
-        {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+        <h1>Create Account</h1>
 
-    <form action="{{ url_for('users.create_account') }}" method="post" onsubmit="return validateForm()">
-        <label for="f_name">First Name:</label>
-        <input type="text" id="f_name" name="f_name" required><br>
-        <label for="l_name">Last Name:</label>
-        <input type="text" id="l_name" name="l_name" required><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="{{ email }}" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required><br>
-        <label for="phone_number">Phone:</label>
-        <input type="tel" id="phone_number" name="phone_number" value="{{ phone_number }}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Please enter a valid phone number in the format XXX-XXX-XXXX" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <label for="password_match">Re-Type Password:</label>
-        <input type="password" id="password_match" name="password_match" required><br>
-        {% if 'error' in messages %}
-        <div class="error-message">{{ messages['error'] }}</div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
         {% endif %}
-        <button type="submit">Create Account</button>
+        {% endwith %}
+
+        <form action="{{ url_for('users.create_account') }}" method="post" onsubmit="return validateForm()" class="form">
+            <div class="input-group">
+                <label for="f_name">First Name:</label>
+                <input type="text" id="f_name" name="f_name" required>
+            </div>
+            <div class="input-group">
+                <label for="l_name">Last Name:</label>
+                <input type="text" id="l_name" name="l_name" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ email }}" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" required>
+            </div>
+            <div class="input-group">
+                <label for="phone_number">Phone:</label>
+                <input type="tel" id="phone_number" name="phone_number" value="{{ phone_number }}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Please enter a valid phone number in the format XXX-XXX-XXXX" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="password_match">Re-Type Password:</label>
+                <input type="password" id="password_match" name="password_match" required>
+            </div>
+            {% if 'error' in messages %}
+            <div class="error-message">{{ messages['error'] }}</div>
+            {% endif %}
+            <div class="input-group">
+                <button type="submit" class="btn">Create Account</button>
+            </div>
     </form>
+</div>
     <script>
     function formatPhoneNumber(phoneNumberInput) {
     var phoneNumber = phoneNumberInput.value;

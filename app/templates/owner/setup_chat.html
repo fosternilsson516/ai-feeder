@@ -1,103 +1,82 @@
 {% block submenu %}
+<style>
+#text-container {
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    width: 70%;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
 
-    <title>Setup Chat</title>
-    <style>
-        #chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 90vh; /* Adjust height if you want some space around the container */
-            width: 65%; /* Set the width of the chat container */
-            margin: auto; /* Center the container horizontally */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-        }
-        #messages {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 20px;
-            border-bottom: 2px solid #ccc;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-        #chat-explanation {
-            margin-bottom: 12px;
-            padding: 8px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-        }
-        #myForm {
-            display: flex;
-            padding: 20px;
-            background: #fff; /* Ensure the input area has a distinct background */
-        }
-        .question, .answer {
-            padding: 10px; /* Adds some padding around the text */
-        }
+#chat-explanation {
+    margin-bottom: 12px;
+    padding: 8px;
+    background-color: #4F5D95;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+}
 
-        /* Optional: Additional styling to further distinguish questions from answers */
-        .question {
-            text-align: left; /* Aligns question text to the left */
-        }
+form#myForm {
+    display: flex;
+    flex-direction: column; /* Change direction to column to stack textarea and button vertically */
+    flex-grow: 1; /* Allow form to fill the remaining space */
+    padding: 20px;
+    background: #fff;
+}
 
-        .answer {
-            text-align: right; /* Aligns answer text to the right */
-            background-color: #e0e0e0; /* Optional: a slightly different background for contrast */
-            border-radius: 5px; /* Optional: rounded corners for the answer */
-            margin-left: 10px; /* Adds some space between the question and answer */
-            cursor: pointer;
-        }
-        .preformatted {
-            white-space: pre-wrap; /* Preserves white spaces and wraps text */
-            font-family: inherit; /* Optional: ensures font consistency with the surrounding text */
-            display: inline; /* Keeps the element inline */
-        }
-        textarea {
-            flex-grow: 1;
-            margin-right: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: none; /* Optional: Prevents the user from resizing the textarea */
-            font-size: 22px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+textarea {
+    height: 100%; /* Make textarea take up available space */
+    resize: none; /* Allow textarea to grow and fill the form space */
+    margin-bottom: 10px; /* Add some space between textarea and button */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px; /* Adjust font size as needed */
+}
+
+button {
+    align-self: flex-end; /* Align button to the end of the form */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+.btn {
+    display: inline-block;
+    background-color: #4F5D95; /* Lighter blue for buttons */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 10px 10px;
+    cursor: pointer;
+}
+.btn:hover {
+    opacity: 0.8;
+}
+
+
 </style>
-    <div id="chat-container" >
-        <div id="message-alert" class="alert" style="display: none;"></div>
-        <div id="messages">
-            <div id="chat-explanation">
-                <p>Welcome to the Setup Chat! Please answer the following questions to help us setup your admin bot. Your responses will be saved and used to help new customers schedule appointments and answer any questions.</p>
-            </div>
-            {% for answer, question, question_id in answered_questions %}
-                <div class="chat-message" data-question-id="{{ question_id }}" ondblclick="copyAnswerToTextarea(this)">
-                    <div class="question">
-                        <strong>Q:</strong> {{ question }}
-                    </div>
-                    <div class="answer">
-                        <strong>A:</strong> <span class="preformatted">{{ answer }}</span>
-                    </div>
-                </div>
-            {% endfor %}
-            
-            {% if next_question %}
-                <strong>Q:</strong> <span class="preformatted">{{ next_question }}</span>
-            {% endif %}
-        </div>
-    <form id="myForm" action="{{ url_for('setup_chat.submit_answer') }}" method="post">
-        <input type="hidden" name="question_id" value="{{ question_id }}">
-        <textarea id="autoResize" name="answer" autofocus required></textarea>
-        <button type="submit">Send</button>
+<div id="text-container">
+    <div id="message-alert" style="display: none;"></div>
+    <div id="chat-explanation">
+        <p>Please enter any kind of text data into this form. Then navigate to the "My URL" menu.</p>
+    </div>
+
+  
+    <form id="myForm" data-menu-option="setup_chat" action="{{ url_for('setup_chat.submit_answer') }}" method="post">
+        <textarea id="autoResize" name="answer" autofocus required>{{ text }}</textarea>
+        <button type="submit" class="btn">Send</button>
     </form>
-    
 </div>
 {% endblock %}

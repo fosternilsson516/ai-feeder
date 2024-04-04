@@ -10,11 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
   
   function loadContent(menuOption) {
+    document.getElementById('default-content').style.display = 'none';
+    const submenu = document.querySelector('.container');
+    submenu.style.display = 'block'; 
     fetch(`/dashboard/${menuOption}`)
       .then(response => response.text())
       .then(html => {
         // Replace the content of the sub-menu
-        document.querySelector('.container').innerHTML = html;
+        submenu.innerHTML = html;
         if (menuOption === 'setup_chat') {
           initializeSetupChat();
         }
@@ -84,29 +87,28 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Form submission prevented. JS is handling submission.');
       const form = e.target;
       const formData = new FormData(form);
+      const menuOption = form.getAttribute('data-menu-option') || form.id;
       fetch(form.action, {
           method: 'POST',
           body: formData,
       })
       
       .then(response => {
-          if (response.status === 204) {
+          if (response.status === 200) {
+            
               // Assuming 'menuOption' is known or stored globally
-              loadContent('setup_chat'); 
+              loadContent(menuOption);
           } else if (response.status === 409) {
             return response.json().then(data => {
-              displayMessage(data.message, "error");
-          });    
+              displayMessage(data.error, "error");  
+          });  
           } else {
               console.error('Server error');
               // Handle server error (e.g., show error message)
               displayMessage("An unexpected error occurred. Please try again.", "error");
           }
       })
-      .catch(error => {
-        console.error('Error:', error);
-        displayMessage("A network error occurred. Please check your connection and try again.", "error");
-    });
+
   }
 });
 });

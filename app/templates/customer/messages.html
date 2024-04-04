@@ -1,85 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-
-    <title>Admin Bot Chat</title>
     <style>
-        #chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 90vh; /* Adjust height if you want some space around the container */
-            width: 65%; /* Set the width of the chat container */
-            margin: auto; /* Center the container horizontally */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-        }
-        #messages {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 20px;
-            border-bottom: 2px solid #ccc;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-        #chat-explanation {
-            margin-bottom: 16px;
-            padding: 8px;
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            font-size: 20px;
-        }
-        #myForm {
-            display: flex;
-            padding: 20px;
-            background: #fff; /* Ensure the input area has a distinct background */
-        }
-        .question, .answer {
-            padding: 10px; 
-            font-size: 20px
-        }
+body, html {
+    background-color: #2B3A67;
+}
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+}
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 95vh; /* Adjust height if you want some space around the container */
+    width: 65%; /* Set the width of the chat container */
+    margin: auto; /* Center the container horizontally */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    background-color: white;
+}
+#messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    border-bottom: 2px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+#chat-explanation {
+    margin-bottom: 16px;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    font-size: 20px;
+}
+#myForm {
+    display: flex;
+    padding: 20px;
+    background: #fff; /* Ensure the input area has a distinct background */
+}
+.question, .answer {
+    padding: 10px; 
+    font-size: 20px
+}
 
-        /* Optional: Additional styling to further distinguish questions from answers */
-        .question {
-            text-align: right; /* Aligns question text to the left */
-        }
+/* Optional: Additional styling to further distinguish questions from answers */
+.question {
+    text-align: right; /* Aligns question text to the left */
+}
 
-        .answer {
-            text-align: left; /* Aligns answer text to the right */
-            background-color: #e0e0e0; /* Optional: a slightly different background for contrast */
-            border-radius: 5px; /* Optional: rounded corners for the answer */
-            margin-left: 10px; /* Adds some space between the question and answer */;
-        }
+.answer {
+    text-align: left; /* Aligns answer text to the right */
+    background-color: #e0e0e0; /* Optional: a slightly different background for contrast */
+    border-radius: 5px; /* Optional: rounded corners for the answer */
+    margin-left: 10px; /* Adds some space between the question and answer */;
+}
 
-        textarea {
-            flex-grow: 1;
-            margin-right: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: none; /* Optional: Prevents the user from resizing the textarea */
-            font-size: 22px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+textarea {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none; /* Optional: Prevents the user from resizing the textarea */
+    font-size: 22px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #4F5D95;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #0056b3;
+}
+#logo {
+    max-width: 30%;
+    height: auto;
+    display: block; 
+}
+
+
+.logo-container {
+  width: 100%;
+  height: 200px; /* Adjust based on your needs */
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+        
 </style>
-    <div id="chat-container" >
+<body>
+    
+    <div id="chat-container">
         <div id="messages">
             <div id="chat-explanation">
-                <p>Welcome to {{ subdomain }}'s admin bot! Ask any questions you might have, then ask for availability to book an appointment.</p>
+                <p>Welcome to {{ subdomain }}'s admin bot! Ask any questions you have.</p>
             </div>
+            <div id="logo-container" class="logo-container">
+                <img src="{{ url_for('static', filename='img/ployease_no_backround.png') }}" alt="Ployease Logo" id="logo">
+            </div>
+
             {% if question and answer %}
                 <div class="chat-message">
                     <div class="question">
@@ -92,8 +123,8 @@
             {% endif %}
  
         </div>
-    <form id="myForm" action="{{ url_for('customer_routes.post_message', subdomain=subdomain) }}" method="post">
-        <textarea id="autoResize" name="answer" autofocus required></textarea>
+    <form id="myForm" action="{{ url_for('customer_route.post_message', subdomain=subdomain) }}" method="post">
+        <textarea id="autoResize" name="text_question" autofocus required></textarea>
         <button type="submit">Send</button>
     </form>
     
@@ -102,7 +133,7 @@
 function initializeSetupChat() {
     scrollToBottom();
     const form = document.getElementById('myForm'); // Assuming you have a form with this ID
-    const textarea = document.querySelector('textarea[name="answer"]');
+    const textarea = document.querySelector('textarea[name="text_question"]');
 
     if (textarea) {
         // Auto-resize textarea on input
@@ -123,13 +154,17 @@ function scrollToBottom() {
     }
 }
 document.addEventListener('DOMContentLoaded', function() {
+    
     initializeSetupChat();
     const form = document.getElementById('myForm');
+    
 
     if (form) {
         form.addEventListener('submit', function(e) {
+            document.getElementById('logo').style.display = 'none';
+            document.getElementById('logo-container').style.display = 'none';
             e.preventDefault();
-
+          
       const formData = new FormData(form);
       fetch(form.action, {
           method: 'POST',

@@ -1,9 +1,4 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .menu-btn {
+   .menu-btn {
     position: fixed;
     top: 20px;
     left: 20px;
@@ -59,28 +54,9 @@ body {
   
   .menu li {
     padding: 15px;
-    color: #fff;
+    color: #ffffff;;
     cursor: pointer;
     caret-color: transparent;
-  }
-
-  #default-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  
-  #default-content h1 {
-    font-size: 50px;
-    margin: 0;
-  }
-  
-  body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
   }
   
   .container {
@@ -90,12 +66,53 @@ body {
     justify-content: center;
     height: 100%;
   }
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #2B3A67; /* Dark blue background */
+    color: white;
+    height: 100vh;
+    display: block;
 
-  .admin-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    overflow: auto;
-  }
+}
+.default-content {
+  text-align: center;
+  padding: 20px;
+  max-width: 1600px; /* Adjust this value to control the width of the content */
+  margin: 0 auto;
+  display: block;
+}
+
+.logo {
+  max-width: 40%; /* Adjust the size of the logo */
+  margin: 30px auto; /* Increase the top margin to prevent cutting off */
+  display: block;
+}
+
+.header {
+  text-align: center;
+  padding: 20px 0;
+  caret-color: transparent;
+}
+
+.app-summary {
+  background-color: #4F5D95; /* Lighter blue to match your buttons */
+  color: white;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.app-summary h2 {
+  color: #adc6ff; /* A light blue for the heading */
+}
+
+.app-summary p, .app-summary li {
+  font-size: 16px;
+  line-height: 1.6;
+  list-style-type: none;
+}
+
+

@@ -67,7 +67,6 @@ def create_account():
             user_id = result[0]
         session['user_id'] = user_id
         user_handler.create_owner_id(user_id)
-        user_handler.insert_owner_id(user_id)
         return redirect(url_for('users.successful_reg'))
 
     # Retrieve form data from session (if available)

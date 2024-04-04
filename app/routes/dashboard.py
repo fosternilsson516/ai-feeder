@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, Blueprint
+from flask import Flask, render_template, session, Blueprint, redirect
 
 dashboard_bp = Blueprint('dashboard', __name__)
 

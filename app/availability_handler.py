@@ -43,24 +43,6 @@ class Availability:
             finally:
                 conn.close() 
 
-    def get_owner_data(self, subdomain):
-        conn = connect_to_database()
-        if conn is not None:
-            try:
-                cursor = conn.cursor()
-                cursor.execute("""
-                    SELECT user_id, time_zone, token, refresh_token, token_uri, client_id, client_secret, scopes, availability, calendar_ids, service_text, special_instructions, business_address   
-                    FROM owners
-                    WHERE subdomain = %s
-                """, (subdomain,))
-                owner_data = cursor.fetchone()
-                return owner_data
-                cursor.close()
-            except psycopg2.Error as e:
-                print("Error executing SQL query:", e)
-            finally:
-                conn.close()
-
     def save_user_credentials(self, user_id, access_token, refresh_token, token_uri, client_id, client_secret, scopes):
         conn = connect_to_database()
         if conn is not None:
@@ -117,20 +99,4 @@ class Availability:
             finally:
                 conn.close() 
 
-    def get_subdomain(self, user_id):
-        conn = connect_to_database()
-        if conn is not None:
-            try:
-                cursor = conn.cursor()
-                cursor.execute("""
-                    SELECT subdomain
-                    FROM owners
-                    WHERE user_id = %s
-                """, (user_id,))
-                subdomain = cursor.fetchone()[0]
-                return subdomain
-                cursor.close()
-            except psycopg2.Error as e:
-                print("Error executing SQL query:", e)
-            finally:
-                conn.close()                                                     
+                                                    
