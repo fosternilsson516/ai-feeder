@@ -13,21 +13,21 @@ def get_url():
     if user_id is None:
         # Redirect the user to the login page
         return redirect(url_for('users.login'))     
-    subdomain = url_setup.get_subdomain(user_id)
-    if subdomain:
-        full_url = f"http://{subdomain}.local:5000"
+    subdirectory = url_setup.get_subdirectory(user_id)
+    if subdirectory:
+        full_url = f"http://local:5000/me/{subdirectory}"
     else:
         full_url = '' 
 
     return render_template('owner/url.html', full_url=full_url) 
 
 @url_bp.route('/', methods=['POST'])
-def post_subdomain():
+def post_subdirectory():
 
     user_id = session.get('user_id')
-    subdomain = request.form['answer']
+    subdirectory = request.form['answer']
 
-    result = url_setup.save_subdomain(user_id, subdomain)
+    result = url_setup.save_subdirectory(user_id, subdirectory)
     if "error" in result:
         # Return a JSON response with the error message
         return jsonify({"error": result["error"]}), 409

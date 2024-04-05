@@ -105,7 +105,7 @@ button:hover {
     <div id="chat-container">
         <div id="messages">
             <div id="chat-explanation">
-                <p>Welcome to {{ subdomain }}'s admin bot! Ask any questions you have.</p>
+                <p>Welcome to {{ subdirectory }}'s admin bot! Ask any questions you have.</p>
             </div>
             <div id="logo-container" class="logo-container">
                 <img src="{{ url_for('static', filename='img/ployease_no_backround.png') }}" alt="Ployease Logo" id="logo">
@@ -123,7 +123,7 @@ button:hover {
             {% endif %}
  
         </div>
-    <form id="myForm" action="{{ url_for('customer_route.post_message', subdomain=subdomain) }}" method="post">
+    <form id="myForm" action="{{ url_for('customer_route.post_message', subdirectory=subdirectory) }}" method="post">
         <textarea id="autoResize" name="text_question" autofocus required></textarea>
         <button type="submit">Send</button>
     </form>

@@ -1,6 +1,6 @@
 {% block submenu %}
 <style>
-.subdomain-container {
+.subdirectory-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +55,7 @@
     background-color: #0056b3;
   }
 
-  .subdomain {
+  .subdirectory {
     text-align: center;
     margin-top: 10px;
   }
@@ -70,7 +70,7 @@
     caret-color: transparent;
   }
 
-  #subdomain-link {
+  #subdirectory-link {
     display: inline-block;
     color: #00fbff;
     padding: 8px;
@@ -80,21 +80,21 @@
     font-size: 20px;
   }
 </style>
-<div class="subdomain-container">
+<div class="subdirectory-container">
   <div class="logo-container">
       <img src="../static/img/ployease_design.png" alt="Ployease Logo" class="logo">
 </div>
 <div id="message-alert" style="display: none;"></div>
 
-<h1 id="custom-sub">Please enter a subdomain.</h1>
+<h1 id="custom-sub">Please enter a subdirectory.</h1>
 
-<form id="myForm" data-menu-option="url" action="{{ url_for('url.post_subdomain') }}" method="post">
-  <textarea id="autoResize" name="answer" autofocus required>{{ subdomain }}</textarea>
+<form id="myForm" data-menu-option="url" action="{{ url_for('url.post_subdirectory') }}" method="post">
+  <textarea id="autoResize" name="answer" autofocus required>{{ subdirectory }}</textarea>
   <button type="submit">Submit</button>
 </form>
 
-<div class="subdomain">
-  <a id="subdomain-link" href="{{ full_url }}" target="_blank">{{ full_url }}</a>
+<div class="subdirectory">
+  <a id="subdirectory-link" href="{{ full_url }}" target="_blank">{{ full_url }}</a>
 </div>
 </div>
 {% endblock %}

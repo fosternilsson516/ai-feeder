@@ -40,55 +40,55 @@ class URLSetup():
             finally:
                 conn.close()                                                        
 
-    def save_subdomain(self, user_id, subdomain):
+    def save_subdirectory(self, user_id, subdirectory):
         conn = connect_to_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                # First, check if the subdomain already exists for another owner
+                # First, check if the subdirectory already exists for another owner
                 cursor.execute("""
-                    SELECT subdomain
+                    SELECT subdirectory
                     FROM owners
-                    WHERE subdomain = %s AND user_id != %s
-                """, (subdomain, user_id))
+                    WHERE subdirectory = %s AND user_id != %s
+                """, (subdirectory, user_id))
                 result = cursor.fetchone()
                 if result:
-                    # Subdomain already taken by another owner
-                    return {"error": "Subdomain already taken. Please change your subdomain, or it will not be saved."}
+                    # subdirectory already taken by another owner
+                    return {"error": "subdirectory already taken. Please change your subdirectory, or it will not be saved."}
                 else:
-                    # Proceed with updating the subdomain since it's not taken
+                    # Proceed with updating the subdirectory since it's not taken
                     cursor.execute("""
                         UPDATE owners
-                        SET subdomain = %s
+                        SET subdirectory = %s
                         WHERE user_id = %s
-                    """, (subdomain, user_id))
+                    """, (subdirectory, user_id))
                     conn.commit()
-                    return {"success": "Subdomain set."}
+                    return {"success": "subdirectory set."}
             except psycopg2.Error as e:
                 print("Error executing SQL query:", e)
-                return {"error": "An error occurred while updating the subdomain."}
+                return {"error": "An error occurred while updating the subdirectory."}
             finally:
                 conn.close()    
 
-    def get_subdomain(self, user_id):
+    def get_subdirectory(self, user_id):
         conn = connect_to_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 cursor.execute("""
-                    SELECT subdomain
+                    SELECT subdirectory
                     FROM owners
                     WHERE user_id = %s  
                 """, (user_id,))
-                subdomain = cursor.fetchone()[0]
-                return subdomain
+                subdirectory = cursor.fetchone()[0]
+                return subdirectory
                 cursor.close()
             except psycopg2.Error as e:
                 print("Error executing SQL query:", e)
             finally:
                 conn.close() 
 
-    def get_owner_data(self, subdomain):
+    def get_owner_data(self, subdirectory):
         conn = connect_to_database()
         if conn is not None:
             try:
@@ -96,8 +96,8 @@ class URLSetup():
                 cursor.execute("""
                     SELECT answer  
                     FROM owners
-                    WHERE subdomain = %s
-                """, (subdomain,))
+                    WHERE subdirectory = %s
+                """, (subdirectory,))
                 result = cursor.fetchone()[0]
                 return result
                 cursor.close()
