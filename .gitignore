@@ -1,4 +1,4 @@
-db.py
 venv/
 __pycache__/
-config.yaml
+.env
+docker-compose/

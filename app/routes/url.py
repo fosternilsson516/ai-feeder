@@ -26,7 +26,6 @@ def post_subdomain():
 
     user_id = session.get('user_id')
     subdomain = request.form['answer']
-    print(subdomain)
 
     result = url_setup.save_subdomain(user_id, subdomain)
     if "error" in result:
