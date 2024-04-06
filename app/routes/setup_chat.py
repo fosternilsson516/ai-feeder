@@ -22,9 +22,19 @@ def get_setup_chat():
 @setup_chat_bp.route('/', methods=['POST'])
 def submit_answer():
     user_id = session.get('user_id')
-    if user_id:
-        text = request.form['answer']     
-        url_setup.save_response(user_id, text) 
-    else:
-        redirect(url_for('users.login'))   
-    return Response(status=200)        
+    if not user_id:
+        # If user is not authenticated, redirect to login
+        return redirect(url_for('users.login'))
+
+    text = request.form.get('answer', '')  # Safely get 'answer' from form data; default to empty string if missing
+    word_count = len(text.split())
+
+    # Check if the word count exceeds the limit
+    if word_count > 10000:
+        # Handle the case where the word limit is exceeded
+        # Return an error message to the user as a JSON response
+        return jsonify({"error": f"Word limit of 10,000 exceeded, please delete some of the text. Total word count: {word_count}"}), 400
+    
+    # Proceed to save the response if the word limit is not exceeded
+    url_setup.save_response(user_id, text)
+    return Response(status=200)       

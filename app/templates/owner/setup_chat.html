@@ -64,19 +64,29 @@ button:hover {
 .btn:hover {
     opacity: 0.8;
 }
+.alert {
+    display: inline-block; /* Aligns the alert next to the button */
+    vertical-align: middle; /* Centers it vertically relative to the button */
+    /* Additional styling here */
+}
+
+.alert.error {
+    color: red;
+}
 
 
 </style>
 <div id="text-container">
-    <div id="message-alert" style="display: none;"></div>
     <div id="chat-explanation">
-        <p>Please enter any kind of text data into this form. Then navigate to the "My URL" menu.</p>
+        <p>Please enter any kind of text data into this form. Then navigate to the "My Bot" menu.</p>
     </div>
 
   
     <form id="myForm" data-menu-option="setup_chat" action="{{ url_for('setup_chat.submit_answer') }}" method="post">
         <textarea id="autoResize" name="answer" autofocus required>{{ text }}</textarea>
         <button type="submit" class="btn">Send</button>
+        <div id="message-alert" class="alert" style="display: none; margin-left: 20px"></div>
     </form>
+    
 </div>
 {% endblock %}

@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
               // Assuming 'menuOption' is known or stored globally
               loadContent(menuOption);
-          } else if (response.status === 409) {
+          } else if (response.status === 400) {
             return response.json().then(data => {
               displayMessage(data.error, "error");  
           });  
