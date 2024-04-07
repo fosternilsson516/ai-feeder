@@ -55,7 +55,7 @@ class Users:
             print("Failed to connect to the database")
             return "Database connection error"            
 
-        def store_user_id(self, phone):
+    def store_user_id(self, phone):
         conn = connect_to_database()
         if conn is not None:
             try:
