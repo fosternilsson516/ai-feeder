@@ -111,7 +111,7 @@ header {
         <form action="{{ url_for('users.post_login') }}" method="post" class="form">
             <div class="input-group">
                 <label for="phone">Phone:</label>
-                <input type="text" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </div>
             <div class="input-group">
                 <label for="password">Password:</label>
@@ -143,7 +143,7 @@ header {
 
 // Set up the event listener for the phone number input field
 document.addEventListener('DOMContentLoaded', function() {
-    var phoneNumberInput = document.getElementById("phone_number");
+    var phoneNumberInput = document.getElementById("phone");
     if (phoneNumberInput) {
         phoneNumberInput.addEventListener('input', function() {
             formatPhoneNumber(phoneNumberInput);
