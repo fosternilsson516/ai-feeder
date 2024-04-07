@@ -21,7 +21,7 @@ class Users:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                cursor.execute("SELECT COUNT(*) FROM users WHERE email = %s", (email,))
+                cursor.execute("SELECT COUNT(*) FROM users WHERE phone_number = %s", (phone,))
                 count = cursor.fetchone()[0]
                 cursor.close()
             except psycopg2.Error as e:
@@ -46,7 +46,7 @@ class Users:
                     else:
                         return "Incorrect password"  # Password incorrect
                 else:
-                    return "Email not found"  # Email incorrect
+                    return "Phone number not found"  # Email incorrect
             except psycopg2.Error as e:
                 print("Error executing SQL query:", e)
             finally:
