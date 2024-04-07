@@ -111,7 +111,7 @@ header {
         <form action="{{ url_for('users.post_login') }}" method="post" class="form">
             <div class="input-group">
                 <label for="phone">Phone:</label>
-                <input type="text" id="phone" name="phone" required>
+                <input type="text" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </div>
             <div class="input-group">
                 <label for="password">Password:</label>
@@ -121,5 +121,35 @@ header {
     </form>
    <!-- <a href="{{ url_for('users.forgot_password') }}" class="forgot-password">Forgot Password</a> -->
 </div>
+<script>
+    function formatPhoneNumber(phoneNumberInput) {
+    var phoneNumber = phoneNumberInput.value;
+    
+    // Remove all non-numeric characters
+    var formattedPhoneNumber = phoneNumber.replace(/\D/g, '');
+    
+    // Apply the desired formatting
+    if (formattedPhoneNumber.length > 6) {
+        // Ensure it does not exceed the format XXX-XXX-XXXX
+        formattedPhoneNumber = formattedPhoneNumber.slice(0, 3) + '-' + formattedPhoneNumber.slice(3, 6) + '-' + formattedPhoneNumber.slice(6, 10);
+    } else if (formattedPhoneNumber.length > 3) {
+        formattedPhoneNumber = formattedPhoneNumber.slice(0, 3) + '-' + formattedPhoneNumber.slice(3);
+    }
+
+    // Update the input field value
+    phoneNumberInput.value = formattedPhoneNumber;
+}
+
+
+// Set up the event listener for the phone number input field
+document.addEventListener('DOMContentLoaded', function() {
+    var phoneNumberInput = document.getElementById("phone_number");
+    if (phoneNumberInput) {
+        phoneNumberInput.addEventListener('input', function() {
+            formatPhoneNumber(phoneNumberInput);
+        });
+    }
+});
+</script>
 </body>
 </html>
