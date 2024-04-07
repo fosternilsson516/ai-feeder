@@ -30,7 +30,7 @@ def post_subdirectory():
     result = url_setup.save_subdirectory(user_id, subdirectory)
     if "error" in result:
         # Return a JSON response with the error message
-        return jsonify({"error": result["error"]}), 409
+        return jsonify({"error": result["error"]}), 400
     elif "success" in result:
         # Return a JSON response with the success message
         return Response(status=200)    

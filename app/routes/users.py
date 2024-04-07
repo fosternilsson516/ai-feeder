@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint
 from werkzeug.security import generate_password_hash
 from app.user_handler import Users
+import re
 
 users_bp = Blueprint('users', __name__)
 user_handler = Users()
@@ -18,28 +19,28 @@ def login():
 @users_bp.route('/login', methods=['POST'])
 def post_login(): 
     # Process login form submission
-    email = request.form['email']
+    phone = request.form['phone']
     password = request.form['password']
 
-    auth_result = user_handler.authenticate_user(email, password)
+    auth_result = user_handler.authenticate_user_phone(phone=phone, password=password)
+        
     if auth_result == True:
-        result = user_handler.store_user_id(email)
+        result = user_handler.store_user_id(phone)
         if result:
-                user_id = result[0]
+            user_id = result[0]
         session['user_id'] = user_id
         return redirect(url_for('dashboard.dashboard'))
     else:
         # Authentication failed, display appropriate error message
         flash(auth_result, "error")
-        return redirect(url_for('users.login'))   
+        return redirect(url_for('users.login')) 
 
 @users_bp.route('/create-account', methods=['GET', 'POST'])
 def create_account():
     email_exists_message = ''
     if request.method == 'POST':
         try:
-            email = request.form['email']
-            phone_number = request.form['phone_number']
+            phone = request.form['phone_number']
             password = request.form['password']
             password_match = request.form['password_match']
             f_name = request.form['f_name']
@@ -55,14 +56,14 @@ def create_account():
 
         password_hash = generate_password_hash(password)   
 
-        if user_handler.email_exists(email):
-            email_exists_message = "Email already exists"
-            flash(email_exists_message, "error")
+        if user_handler.phone_exists(phone):
+            phone_exists_message = "phone number already exists"
+            flash(phone_exists_message, "error")
             return redirect(url_for('users.create_account'))    
 
         # Proceed with registration if passwords match
-        user_handler.create_account(email, phone_number, password_hash, f_name, l_name)
-        result = user_handler.store_user_id(email)
+        user_handler.create_account(phone, password_hash, f_name, l_name)
+        result = user_handler.store_user_id(phone)
         if result:
             user_id = result[0]
         session['user_id'] = user_id
@@ -70,10 +71,9 @@ def create_account():
         return redirect(url_for('users.successful_reg'))
 
     # Retrieve form data from session (if available)
-    email = session.pop('email', '')
     phone_number = session.pop('phone_number', '')
 
-    return render_template('owner/create_account.html', email=email, phone_number=phone_number)   
+    return render_template('owner/create_account.html', phone_number=phone_number)   
 
 @users_bp.route('/successful-reg')
 def successful_reg():
