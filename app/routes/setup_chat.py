@@ -15,7 +15,7 @@ def get_setup_chat():
         
     text = url_setup.get_response(user_id)
     if text is None:
-        text = []
+        text = ''
     
     return render_template('owner/setup_chat.html', text=text)
 
