@@ -37,7 +37,7 @@ def post_login():
 
 @users_bp.route('/create-account', methods=['GET', 'POST'])
 def create_account():
-    email_exists_message = ''
+    phone_exists_message = ''
     if request.method == 'POST':
         try:
             phone = request.form['phone_number']
@@ -71,9 +71,9 @@ def create_account():
         return redirect(url_for('users.successful_reg'))
 
     # Retrieve form data from session (if available)
-    phone_number = session.pop('phone_number', '')
+    phone = session.pop('phone', '')
 
-    return render_template('owner/create_account.html', phone_number=phone_number)   
+    return render_template('owner/create_account.html', phone_number=phone)   
 
 @users_bp.route('/successful-reg')
 def successful_reg():

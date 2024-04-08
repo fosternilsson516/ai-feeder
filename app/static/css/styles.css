@@ -105,14 +105,9 @@ body, html {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.app-summary h2 {
-  color: #adc6ff; /* A light blue for the heading */
-}
-
-.app-summary p, .app-summary li {
-  font-size: 16px;
+.app-summary p {
+  font-size: 18px;
   line-height: 1.6;
-  list-style-type: none;
 }
 
 
