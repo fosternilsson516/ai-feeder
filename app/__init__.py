@@ -15,8 +15,8 @@ load_dotenv()
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.secret_key = os.getenv('SECRET_KEY')
-app.config['SERVER_NAME'] = 'ployease.com'
-#app.config['SERVER_NAME'] = 'localhost:5000'
+#app.config['SERVER_NAME'] = 'ployease.com'
+app.config['SERVER_NAME'] = 'localhost:5000'
 app.register_blueprint(users_bp)
 app.register_blueprint(dashboard_bp, url_prefix='/dashboard')
 app.register_blueprint(customer_route_bp, url_prefix='/me')

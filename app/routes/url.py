@@ -15,8 +15,8 @@ def get_url():
         return redirect(url_for('users.login'))     
     subdirectory = url_setup.get_subdirectory(user_id)
     if subdirectory:
-        full_url = f"https://ployease.com/me/{subdirectory}"
-        #full_url = f"http://localhost:5000/me/{subdirectory}"
+        #full_url = f"https://ployease.com/me/{subdirectory}"
+        full_url = f"http://localhost:5000/me/{subdirectory}"
     else:
         full_url = '' 
 
