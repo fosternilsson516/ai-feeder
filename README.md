@@ -17,7 +17,7 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
 2. **Run Docker Container**  
    To use the tool, run the following command in your terminal. Replace `full/path/to/file.csv` with the actual path to your CSV file.
    ```bash
-    docker run --rm -it -p 8000:8000 -v "full/path/to/file.csv:/data/file_name.csv" fosternilsson/excel_viz_cli:1.2 /data/file_name.csv --count --values --columns
+    docker run --rm -it -p 8000:8000 -v "full/path/to/file.csv:/data/file_name.csv" fosternilsson/excel_viz_cli:1.2 /data/file_name.csv --count <column> --values <rows in column> --columns <other columns to specify>
 
 ## Parameters Explained
 - `--count` : Specifies the name of the column to perform a count aggregation on.
