@@ -30,6 +30,6 @@ After running the command, open your web browser and navigate to:
 [http://localhost:8000](http://localhost:8000)
 
 ## Example Screen Shots
-![csv file](images/screenshot.png "csv file")
-![command](images/screenshot.png "command")
+![csv file](Screenshot 2024-04-21 165642.png "csv file")
+![command](Screenshot 2024-04-21 165642.png "command")
 ![graph](images/screenshot.png "graph")
