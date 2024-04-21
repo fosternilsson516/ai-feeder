@@ -29,7 +29,3 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
 After running the command, open your web browser and navigate to:
 [http://localhost:8000](http://localhost:8000)
 
-## Example Screen Shots
-![csv file]("Screenshot 2024-04-21 165642.png" "csv file")
-![command](Screenshot 2024-04-21 165642.png "command")
-![graph](images/screenshot.png "graph")
