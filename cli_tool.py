@@ -1,16 +1,14 @@
 import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+
+import threading
 
 def load_csv(csv_file):
     """Load a CSV file into a DataFrame."""
     return pd.read_csv(csv_file)
-
-def display_columns(df):
-    """Print the DataFrame's columns with indices."""
-    print("Column names:")
-    for i, column in enumerate(df.columns, start=1):
-        print(f"{i}: {column}")
 
 def count_and_graph(df, x_col_name, values, count_col_names):
     """Generate a bar graph based on counts of specified values in a column, across other specified columns."""
@@ -41,7 +39,8 @@ def count_and_graph(df, x_col_name, values, count_col_names):
     ax.set_ylabel('Counts')
     ax.set_title('Counts of non-null values for each value across specified columns')
     ax.legend(title='Columns')
-    plt.show()
+    plt.savefig('output/plot.png')  # Save the plot as a PNG file
+    plt.close()
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Data manipulation tool')
@@ -51,8 +50,38 @@ def parse_args():
     parser.add_argument('--columns', nargs='+', help='List of columns to consider for counting', type=str)
     return parser.parse_args()
 
+def run_server():
+    port = 8000
+    directory = "output"
+    os.chdir(directory)  # Change to the 'output' directory
+
+    class CustomHandler(SimpleHTTPRequestHandler):
+        """HTTP Handler that serves files from the given directory."""
+    
+    httpd = HTTPServer(("", port), CustomHandler)
+    print(f"Serving at port {port}. Navigate to http://localhost:{port}/plot.png to view the plot.")
+
+    # Function to run the server in a separate thread
+    def server_thread():
+        httpd.serve_forever()
+    
+    # Start the server thread
+    thread = threading.Thread(target=server_thread)
+    thread.daemon = True  # This makes the thread exit when the main program does
+    thread.start()
+
+    # Wait for user input to shutdown
+    input("Press Enter to stop the server and exit.\n")
+    httpd.shutdown()  # Shutdown the server
+    thread.join() 
+    
+
 def main():
     args = parse_args()
     df = load_csv(args.csv_file)
     if args.count and args.values and args.columns:
         count_and_graph(df, args.count, args.values, args.columns)
+    run_server()
+
+if __name__ == '__main__':
+    main()        
