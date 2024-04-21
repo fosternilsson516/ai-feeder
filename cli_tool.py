@@ -39,7 +39,7 @@ def count_and_graph(df, x_col_name, values, count_col_names):
     ax.set_ylabel('Counts')
     ax.set_title('Counts of non-null values for each value across specified columns')
     ax.legend(title='Columns')
-    plt.savefig('output/plot.png')  # Save the plot as a PNG file
+    plt.savefig('/app/output/plot.png')  # Save the plot as a PNG file
     plt.close()
 
 def parse_args():
@@ -52,14 +52,14 @@ def parse_args():
 
 def run_server():
     port = 8000
-    directory = "output"
+    directory = "/app/output"
     os.chdir(directory)  # Change to the 'output' directory
 
     class CustomHandler(SimpleHTTPRequestHandler):
         """HTTP Handler that serves files from the given directory."""
     
     httpd = HTTPServer(("", port), CustomHandler)
-    print(f"Serving at port {port}. Navigate to http://localhost:{port}/plot.png to view the plot.")
+    print(f"Serving at port {port}. Navigate to http://localhost:{port} and click on 'plot.png' to view the graph.")
 
     # Function to run the server in a separate thread
     def server_thread():
@@ -71,7 +71,7 @@ def run_server():
     thread.start()
 
     # Wait for user input to shutdown
-    input("Press Enter to stop the server and exit.\n")
+    input("Press ctrl+C to stop the server and exit.\n")
     httpd.shutdown()  # Shutdown the server
     thread.join() 
     
