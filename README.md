@@ -9,7 +9,7 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
 - **Web Browser**: Required to view the generated graph on `localhost:8000`.
 
 ## Installation
-1. **Pull the Docker Image**  
+ **Pull the Docker Image**  
    Pull the latest version of Excel Viz CLI from Docker Hub in command line:
    ```bash
    docker pull fosternilsson/excel_viz_cli:1.2
