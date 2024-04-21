@@ -15,7 +15,7 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
    docker pull fosternilsson/excel_viz_cli:1.2
 
 ## Usage
-2. **run the docker container**
+ run the docker container
 
  To use the tool, run the following command in your terminal. Replace `full/path/to/file.csv` with the actual path to your CSV file.
 
