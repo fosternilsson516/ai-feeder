@@ -8,13 +8,12 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
 - **Docker**: Necessary for running the containerized version of the tool.
 - **Web Browser**: Required to view the generated graph on `localhost:8000`.
 
-## Installation
+## Usage
 1. **Pull the Docker Image**  
    Pull the latest version of Excel Viz CLI from Docker Hub using the following command:
    ```bash
    docker pull fosternilsson/excel_viz_cli:1.2
 
-## Usage
 2. **Run Docker Container**  
    To use the tool, run the following command in your terminal. Replace `full/path/to/file.csv` with the actual path to your CSV file.
    ```bash
