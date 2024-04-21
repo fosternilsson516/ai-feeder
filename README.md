@@ -18,8 +18,6 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
 
 To use the tool, run the following command in your terminal. Replace `full/path/to/file.csv` with the actual path to your CSV file.
 
-    bash
-    Copy code
     docker run --rm -it -p 8000:8000 -v "full/path/to/file.csv:/data/file_name.csv" fosternilsson/excel_viz_cli:1.2 /data/file_name.csv --count --values --columns
 
 #### Parameters Explained
