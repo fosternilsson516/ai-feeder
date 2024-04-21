@@ -13,17 +13,22 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
    Pull the latest version of Excel Viz CLI from Docker Hub in command line:
    ```bash
    docker pull fosternilsson/excel_viz_cli:1.2
-Usage
-To use the tool, run the following command in your terminal. Replace full/path/to/file.csv with the actual path to your CSV file.
 
-bash
-Copy code
-docker run --rm -it -p 8000:8000 -v "full/path/to/file.csv:/data/file_name.csv" fosternilsson/excel_viz_cli:1.2 /data/file_name.csv --count <name of column> --values <rows in column to view on x-axis> --columns <other column names that have a value to be counted>
-Parameters Explained
---count <name of column>: Specifies the name of the column to perform a count aggregation on.
---values <rows in column to view on x-axis>: Determines which rows from the specified column will appear on the x-axis of the graph.
---columns <other column names>: Other column names in the CSV whose values are to be counted and displayed.
-Viewing the Graph
+### Usage
+
+To use the tool, run the following command in your terminal. Replace `full/path/to/file.csv` with the actual path to your CSV file.
+
+    bash
+    Copy code
+    docker run --rm -it -p 8000:8000 -v "full/path/to/file.csv:/data/file_name.csv" fosternilsson/excel_viz_cli:1.2 /data/file_name.csv --count --values --columns
+
+#### Parameters Explained
+- `--count` : Specifies the name of the column to perform a count aggregation on.
+- `--values` : Determines which rows from the specified column will appear on the x-axis of the graph.
+- `--columns` : Other column names in the CSV whose values are to be counted and displayed.
+
+### Viewing the Graph
+
 After running the command, open your web browser and navigate to:
+[http://localhost:8000](http://localhost:8000)
 
-http://localhost:8000
