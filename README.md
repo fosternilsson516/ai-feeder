@@ -17,9 +17,9 @@ Before using Excel Viz CLI, ensure you have the following installed on your syst
 To use the tool, run the following command in your terminal. Replace `full/path/to/file.csv` with the actual path to your CSV file.
 
 ```bash
-docker run --rm -it -p 8000:8000 -v "full/path/to/file.csv:/data/file.csv" fosternilsson/excel_viz_cli:1.2 /data/file.csv --count <name of column> --values <rows in column to view on x-axis> --columns <other column names that have a value to be counted>
+docker run --rm -it -p 8000:8000 -v "full/path/to/file.csv:/data/file.csv" fosternilsson/excel_viz_cli:1.2 /data/file.csv --count <name of column> --values <rows in       column to view on x-axis> --columns <other column names that have a value to be counted>
 
-### Parameters Explained
+## Parameters Explained
 - `--count <name of column>`: Specifies the name of the column to perform a count aggregation on.
 - `--values <rows in column to view on x-axis>`: Determines which rows from the specified column will appear on the x-axis of the graph.
 - `--columns <other column names>`: Other column names in the CSV whose values are to be counted and displayed.
