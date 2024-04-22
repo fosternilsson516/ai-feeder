@@ -33,3 +33,6 @@ After running the command, open your web browser and navigate to:
 Here's an exmple command to pass:
 ![command](command_example.png "command example")
 
+this is a snippet of some of the csv data to be aggregated:
+![command](.png "command example")
+
