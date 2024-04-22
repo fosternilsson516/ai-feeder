@@ -1,7 +1,7 @@
 # Excel Viz CLI
 
 ## Introduction
-Excel Viz CLI is a command-line interface (CLI) tool that allows users to visualize data from CSV files as PNG graphs. Users can specify the path to a CSV file along with certain arguments, and then view the resulting graph by navigating to `localhost:8000` on their browser.
+Excel Viz CLI is a command-line interface (CLI) tool designed to transform data from CSV files into PNG graphs. Users can specify the path to a local CSV file and configure specific parameters. The resulting graph is accessible via a web browser at localhost:8000. Operating exclusively within a local Docker container, Excel Viz CLI ensures that your data remains secure and never exposed to the internet, maintaining privacy and integrity on your local machine.
 
 ## Prerequisites
 Before using Excel Viz CLI, ensure you have the following installed on your system:
