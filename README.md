@@ -31,5 +31,5 @@ After running the command, open your web browser and navigate to:
 
 ## Screen Shots
 Here's an exmple command to pass:
-![command](data-processor/command_example.png "command example")
+![command](command_example.png "command example")
 
