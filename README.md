@@ -5,7 +5,7 @@ Excel Viz CLI is a command-line interface (CLI) tool designed to transform data 
 
 ## Prerequisites
 Before using Excel Viz CLI, ensure you have the following installed on your system:
-- **Docker**: Necessary for running the containerized version of the tool.
+- **Docker**: Necessary for running the containerized version of the tool. For detailed instructions on installing Docker on Windows, please visit the [Docker Desktop for Windows installation guide](https://docs.docker.com/desktop/install/windows-install/).
 - **Web Browser**: Required to view the generated graph on `localhost:8000`.
 
 ## Usage
