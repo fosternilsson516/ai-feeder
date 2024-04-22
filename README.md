@@ -34,5 +34,8 @@ Here's an exmple command to pass:
 ![command](command_example.png "command example")
 
 this is a snippet of some of the csv data to be aggregated:
-![command](.png "command example")
+![command](csv_data.png "csv data")
+
+Here is the generated graph:
+![command](generated_graph.png "graph")
 
