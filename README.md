@@ -33,9 +33,9 @@ After running the command, open your web browser and navigate to:
 Here's an exmple command to pass:
 ![command](command_example.png "command example")
 
-this is a snippet of some of the csv data to be aggregated:
-![command](csv_data.png "csv data")
+This is a snippet of some of the csv data to be aggregated:
+![csv data](csv_data.png "csv data")
 
 Here is the generated graph:
-![command](generated_graph.png "graph")
+![graph](generated_graph.png "graph")
 
